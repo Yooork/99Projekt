@@ -228,7 +228,7 @@ public class Kurs {
 		return wochentagZahl;
 	}
 
-	private int blockUhrzeitInBlockeinheit(String blockUhrzeit) throws ExceptionUhrzeit {
+	public int blockUhrzeitInBlockeinheit(String blockUhrzeit) throws ExceptionUhrzeit {
 		switch (blockUhrzeit) {
 		case "8:00 Uhr - 9:30":
 			blockeinheit = 1;
@@ -250,7 +250,7 @@ public class Kurs {
 			blockeinheit = 5;
 			break;
 
-		case "17:30 Uhr - 19:00 Uh":
+		case "17:30 Uhr - 19:00 Uhr":
 			blockeinheit = 6;
 			break;
 		default:
