@@ -15,14 +15,12 @@ public class Kurs {
 
 		try {
 			blockUhrzeit = blockeinheitInBlockUhrzeit(blockeinheit);
-		} catch (ExceptionUhrzeit e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (ExceptionUhrzeit e) {
+			e.printStackTrace();
 		}
 		try {
 			wochentagZahl = WochentagInwochentagZahl(wochentag);
 		} catch (ExecptionTag e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -36,14 +34,12 @@ public class Kurs {
 
 		try {
 			blockUhrzeit = blockeinheitInBlockUhrzeit(blockeinheit);
-		} catch (ExceptionUhrzeit e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (ExceptionUhrzeit e) {
+			e.printStackTrace();
 		}
 		try {
 			wochentag = wochentagZahlInWochentag(wochentagZahl);
 		} catch (ExecptionTag e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -57,14 +53,12 @@ public class Kurs {
 
 		try {
 			wochentagZahl = WochentagInwochentagZahl(wochentag);
-		} catch (ExecptionTag e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (ExecptionTag e) {
+			e.printStackTrace();
 		}
 		try {
 			blockeinheit = blockUhrzeitInBlockeinheit(blockUhrzeit);
 		} catch (ExceptionUhrzeit e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -79,13 +73,11 @@ public class Kurs {
 		try {
 			wochentag = wochentagZahlInWochentag(wochentagZahl);
 		} catch (ExecptionTag e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			blockeinheit = blockUhrzeitInBlockeinheit(blockUhrzeit);
 		} catch (ExceptionUhrzeit e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
