@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 //kfjhgdl
+//dfhkjlö
 
 
 public class Stundenplan {
