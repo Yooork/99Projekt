@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
+//LEON WAR HIER =)
+
 public class Stundenplan {
 
 	public static void main(String[] args) {
