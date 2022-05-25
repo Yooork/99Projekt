@@ -35,17 +35,23 @@ public class Stundenplan {
 		
 
 		Scanner in = new Scanner(System.in);
+		
+		kurseEinsotieren(alleKurse, montag, dienstag, mittwoch, donnerstag, freitag, samstag);
+		allesotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag);
 	
 		
 		while (true) {
 			
-			kurseEinsotieren(alleKurse, montag, dienstag, mittwoch, donnerstag, freitag, samstag);
-			allesotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag);
 			
 			
-			
-			System.out.print(
-					"Drücke \n1 um alle Kurse auszugeben \n2 um einen Kurs zu suchen \n3 um einen Kurs zu erstellen \nq zum beenden \nIhre Eingabe: ");
+		
+			System.out.println("Drücke:");
+			System.out.println("1 um alle Kurse auszugeben");
+			System.out.println("2 um ein Kurs zu suchen");
+			System.out.println("3 um einen Kurs zu erstellen");
+			System.out.println("4 um den Stundenplan als Datei auszugeben");
+			System.out.println("q um das Programm zu beenden");
+			System.out.print("Ihre Eingabe: ");
 			String eingabeSwitch=in.nextLine();
 			
 			
@@ -92,6 +98,8 @@ public class Stundenplan {
 						alleKurse.add(new Kurs(kursName, uhrzeit, wochentag, online, p1));
 					}
 				}
+				
+				//kurseEinsotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag, alleKurse, );
 				
 				
 				
@@ -440,6 +448,50 @@ public class Stundenplan {
 			}
 
 		}
+	}
+		
+		
+		public static void kurseEinsotierenMitID(ArrayList<Kurs> alleKurse, ArrayList<Kurs> montag, ArrayList<Kurs> dienstag,
+				ArrayList<Kurs> mittwoch, ArrayList<Kurs> donnerstag, ArrayList<Kurs> freitag, ArrayList<Kurs> samstag, int id) {
+
+			for (Iterator<Kurs> e = alleKurse.iterator(); e.hasNext();) {
+				Kurs a = e.next();
+
+				if (a.getBlockUhrzeit() == null) {
+					e.remove();
+					System.out.println(
+							"Der Kurs " + a.getKursname() + " ist fehlerhaft und wird nicht zum Stundenplan hinzugefügt");
+				}
+
+				else {
+
+					switch (a.getWochentagZahl()) {
+
+					case 1:
+						montag.add(a);
+						break;
+					case 2:
+						dienstag.add(a);
+						break;
+					case 3:
+						mittwoch.add(a);
+						break;
+					case 4:
+						donnerstag.add(a);
+						break;
+					case 5:
+						freitag.add(a);
+						break;
+					case 6:
+						samstag.add(a);
+						break;
+					default:
+
+						break;
+					}
+				}
+
+			}
 	}
 	
 	public static void kurseVonDateieinlesen() {
