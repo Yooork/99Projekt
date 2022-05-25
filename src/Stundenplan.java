@@ -42,17 +42,18 @@ public class Stundenplan {
 		
 		while (true) {
 			
+			//https://de.piliapp.com/symbol/line/
+			System.out.println("┌────────────────────────────────────────┐");
+			System.out.println("│Drücke:                                 │");
+			System.out.println("│1 ➞ alle Kurse auszugeben               │");
+			System.out.println("│2 ➞ Kurs suchen                         │");
+			System.out.println("│3 ➞ Kurs erstellen                      │");
+			System.out.println("│4 ➞ Stundenplan als Datei auszugeben    │");
+			System.out.println("│q ➞ Programm zu beenden                 │");
+			System.out.println("└────────────────────────────────────────┘");
+			System.out.print("Ihre Eingabe ➞ ");
 			
-			
-		
-			System.out.println("Drücke:");
-			System.out.println("1 um alle Kurse auszugeben");
-			System.out.println("2 um ein Kurs zu suchen");
-			System.out.println("3 um einen Kurs zu erstellen");
-			System.out.println("4 um den Stundenplan als Datei auszugeben");
-			System.out.println("q um das Programm zu beenden");
-			System.out.print("Ihre Eingabe: ");
-			String eingabeSwitch=in.nextLine();
+			String eingabeSwitch=inString.nextLine();
 			
 			
 			switch (eingabeSwitch) {
@@ -68,7 +69,7 @@ public class Stundenplan {
 			case "2":
 				System.out.println();
 				System.out.println("Welcher Kurs soll gesucht werden? (Kursname)");
-				String eingabe = in.nextLine();
+				String eingabe = inString.nextLine();
 				suchen(alleKurse, eingabe);
 				break;
 			case "3":
@@ -112,7 +113,9 @@ public class Stundenplan {
 			
 			
 			case "4":
-				dateiAusgeben(montag, dienstag, mittwoch, donnerstag, freitag, samstag);
+				System.out.println("Welcher Dateiname soll der Stundenplan haben?");
+				String dateiname = inString.nextLine();
+				dateiAusgeben(montag, dienstag, mittwoch, donnerstag, freitag, samstag, dateiname);
 				break;
 				
 			default:
@@ -200,10 +203,10 @@ public class Stundenplan {
 	}
 
 	public static void dateiAusgeben(ArrayList<Kurs> montag, ArrayList<Kurs> dienstag, ArrayList<Kurs> mittwoch,
-			ArrayList<Kurs> donnerstag, ArrayList<Kurs> freitag, ArrayList<Kurs> samstag) {
+			ArrayList<Kurs> donnerstag, ArrayList<Kurs> freitag, ArrayList<Kurs> samstag, String dateiname) {
 
 		try (BufferedWriter dateiSchreiber = new BufferedWriter(
-				new FileWriter(new File("/Users/york/Desktop/text.txt"), false))) {
+				new FileWriter(new File("/Users/york/Desktop/"+dateiname+".txt"), false))) {
 			String online;
 			boolean ausgabe = false;
 			dateiSchreiber.write("-----Montag-----\n");
@@ -413,12 +416,6 @@ public class Stundenplan {
 	public static void kurseEinsotieren(ArrayList<Kurs> alleKurse, ArrayList<Kurs> montag, ArrayList<Kurs> dienstag,
 			ArrayList<Kurs> mittwoch, ArrayList<Kurs> donnerstag, ArrayList<Kurs> freitag, ArrayList<Kurs> samstag) {
 		
-//		montag.clear();
-//		dienstag.clear();
-//		mittwoch.clear();
-//		donnerstag.clear();
-//		freitag.clear();
-//		samstag.clear();
 
 		for (Iterator<Kurs> e = alleKurse.iterator(); e.hasNext();) {
 			Kurs a = e.next();
