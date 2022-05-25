@@ -33,7 +33,6 @@ public class Stundenplan {
 		ArrayList<Kurs> samstag = new ArrayList<Kurs>();
 
 		
-		dateiAusgeben(montag, dienstag, mittwoch, donnerstag, freitag, samstag);
 
 		Scanner in = new Scanner(System.in);
 	
@@ -43,8 +42,10 @@ public class Stundenplan {
 			kurseEinsotieren(alleKurse, montag, dienstag, mittwoch, donnerstag, freitag, samstag);
 			allesotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag);
 			
-//			System.out.print(
-//					"Drücke \n1 um alle Kurse auszugeben \n2 um einen Kurs zu suchen \n3 um einen Kurs zu erstellen \nq zum beenden \nIhre Eingabe:");
+			
+			
+			System.out.print(
+					"Drücke \n1 um alle Kurse auszugeben \n2 um einen Kurs zu suchen \n3 um einen Kurs zu erstellen \nq zum beenden \nIhre Eingabe: ");
 			String eingabeSwitch=in.nextLine();
 			
 			
@@ -109,6 +110,7 @@ public class Stundenplan {
 			default:
 				System.out.println(eingabeSwitch+" ist nicht definiert");
 			}
+			System.out.println();
 		}
 
 	}
@@ -365,6 +367,8 @@ public class Stundenplan {
 				}
 				
 				ausgabe=false;
+				
+				System.out.println("Datei wurde erfolgreich erstellt");
 			
 				
 			
