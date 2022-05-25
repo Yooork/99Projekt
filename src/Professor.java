@@ -5,6 +5,7 @@ public class Professor {
 	private String geschlecht;
 	private long tel;
 	private String eMail;
+	private static int id = 0;
 
 	public Professor(String name, String vorname, String geschlecht, long tel) {
 		this.name = name;
@@ -12,6 +13,7 @@ public class Professor {
 		this.geschlecht = geschlecht;
 		this.tel = tel;
 		eMail = eMail(vorname, name);
+		id++;
 	}
 
 	public String eMail(String vorname, String name) {
@@ -22,6 +24,10 @@ public class Professor {
 	public String toString() {
 		return "Professor [name=" + name + ", vorname=" + vorname + ", geschlecht=" + geschlecht + ", tel=" + tel
 				+ ", eMail=" + eMail + "]";
+	}
+
+	public int getId() {
+		return id;
 	}
 
 }

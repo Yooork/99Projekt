@@ -6,12 +6,14 @@ public class Kurs {
 	private String wochentag;
 	private int wochentagZahl;
 	private boolean online;
+	private int id;
 
 	public Kurs(String kursname, int blockeinheit, String wochentag, boolean online, Professor professor) {
 		this.kursname = kursname;
 		this.blockeinheit = blockeinheit;
 		this.wochentag = wochentag;
 		this.online = online;
+		id = professor.getId();
 
 		try {
 			blockUhrzeit = blockeinheitInBlockUhrzeit(blockeinheit);
@@ -23,7 +25,12 @@ public class Kurs {
 		} catch (ExecptionTag e) {
 			e.printStackTrace();
 		}
+		
 
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public Kurs(String kursname, int blockeinheit, int wochentagZahl, boolean online, Professor professor) {
@@ -31,6 +38,7 @@ public class Kurs {
 		this.blockeinheit = blockeinheit;
 		this.wochentagZahl = wochentagZahl;
 		this.online = online;
+		id = professor.getId();
 
 		try {
 			blockUhrzeit = blockeinheitInBlockUhrzeit(blockeinheit);
@@ -42,6 +50,7 @@ public class Kurs {
 		} catch (ExecptionTag e) {
 			e.printStackTrace();
 		}
+		
 
 	}
 
@@ -50,6 +59,7 @@ public class Kurs {
 		this.blockUhrzeit = blockUhrzeit;
 		this.wochentag = wochentag;
 		this.online = online;
+		id = professor.getId();
 
 		try {
 			wochentagZahl = WochentagInwochentagZahl(wochentag);
@@ -61,6 +71,7 @@ public class Kurs {
 		} catch (ExceptionUhrzeit e) {
 			e.printStackTrace();
 		}
+		
 
 	}
 
@@ -69,6 +80,7 @@ public class Kurs {
 		this.blockUhrzeit = blockUhrzeit;
 		this.wochentagZahl = wochentagZahl;
 		this.online = online;
+		id = professor.getId();
 
 		try {
 			wochentag = wochentagZahlInWochentag(wochentagZahl);
@@ -80,6 +92,7 @@ public class Kurs {
 		} catch (ExceptionUhrzeit e) {
 			e.printStackTrace();
 		}
+		
 
 	}
 
@@ -222,7 +235,7 @@ public class Kurs {
 
 	public int blockUhrzeitInBlockeinheit(String blockUhrzeit) throws ExceptionUhrzeit {
 		switch (blockUhrzeit) {
-		case "8:00 Uhr - 9:30":
+		case "8:00 Uhr - 9:30 Uhr":
 			blockeinheit = 1;
 			break;
 
