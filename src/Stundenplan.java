@@ -99,7 +99,7 @@ public class Stundenplan {
 					}
 				}
 				
-				//kurseEinsotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag, alleKurse, );
+				kurseEinsotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag, alleKurse);
 				
 				
 				
@@ -119,7 +119,10 @@ public class Stundenplan {
 				System.out.println(eingabeSwitch+" ist nicht definiert");
 			}
 			System.out.println();
+			
 		}
+		
+		
 
 	}
 
@@ -409,9 +412,18 @@ public class Stundenplan {
 
 	public static void kurseEinsotieren(ArrayList<Kurs> alleKurse, ArrayList<Kurs> montag, ArrayList<Kurs> dienstag,
 			ArrayList<Kurs> mittwoch, ArrayList<Kurs> donnerstag, ArrayList<Kurs> freitag, ArrayList<Kurs> samstag) {
+		
+//		montag.clear();
+//		dienstag.clear();
+//		mittwoch.clear();
+//		donnerstag.clear();
+//		freitag.clear();
+//		samstag.clear();
 
 		for (Iterator<Kurs> e = alleKurse.iterator(); e.hasNext();) {
 			Kurs a = e.next();
+			
+			
 
 			if (a.getBlockUhrzeit() == null) {
 				e.remove();
@@ -450,49 +462,7 @@ public class Stundenplan {
 		}
 	}
 		
-		
-		public static void kurseEinsotierenMitID(ArrayList<Kurs> alleKurse, ArrayList<Kurs> montag, ArrayList<Kurs> dienstag,
-				ArrayList<Kurs> mittwoch, ArrayList<Kurs> donnerstag, ArrayList<Kurs> freitag, ArrayList<Kurs> samstag, int id) {
 
-			for (Iterator<Kurs> e = alleKurse.iterator(); e.hasNext();) {
-				Kurs a = e.next();
-
-				if (a.getBlockUhrzeit() == null) {
-					e.remove();
-					System.out.println(
-							"Der Kurs " + a.getKursname() + " ist fehlerhaft und wird nicht zum Stundenplan hinzugefügt");
-				}
-
-				else {
-
-					switch (a.getWochentagZahl()) {
-
-					case 1:
-						montag.add(a);
-						break;
-					case 2:
-						dienstag.add(a);
-						break;
-					case 3:
-						mittwoch.add(a);
-						break;
-					case 4:
-						donnerstag.add(a);
-						break;
-					case 5:
-						freitag.add(a);
-						break;
-					case 6:
-						samstag.add(a);
-						break;
-					default:
-
-						break;
-					}
-				}
-
-			}
-	}
 	
 	public static void kurseVonDateieinlesen() {
 		
