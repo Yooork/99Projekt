@@ -95,6 +95,29 @@ public class Kurs {
 		
 
 	}
+	
+	public Kurs(String kursname, int blockeinheit, int wochentagZahl, boolean online, int professorId) {
+		this.kursname = kursname;
+		this.blockeinheit = blockeinheit;
+		this.wochentagZahl = wochentagZahl;
+		this.online = online;
+		id = professorId;
+
+		try {
+			blockUhrzeit = blockeinheitInBlockUhrzeit(blockeinheit);
+		} catch (ExceptionUhrzeit e) {
+			e.printStackTrace();
+		}
+		try {
+			wochentag = wochentagZahlInWochentag(wochentagZahl);
+		} catch (ExecptionTag e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
 
 	public String getKursname() {
 		return kursname;
@@ -114,8 +137,11 @@ public class Kurs {
 
 	@Override
 	public String toString() {
-		return "Kurs [kursname=" + kursname + ", blockeinheit=" + blockeinheit + ", blockUhrzeit=" + blockUhrzeit
-				+ ", wochentag=" + wochentag + ", wochentagZahl=" + wochentagZahl + ", online=" + online + "]";
+		return kursname + "\n" + blockUhrzeit + "\nIst der Kurs per Zoom?: " + online + "\nProfessor-ID: " + id+"\n\n";
+	}
+	
+	public String toStringtoTxt() {
+		return kursname +";" + blockeinheit +";" +wochentagZahl+";" + online + ";" + id;
 	}
 
 	private String blockeinheitInBlockUhrzeit(int blockeinheit) throws ExceptionUhrzeit {

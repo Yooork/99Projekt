@@ -1,5 +1,7 @@
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,9 +15,13 @@ import javax.swing.KeyStroke;
 public class Stundenplan {
 
 	public static void main(String[] args) {
+		
+		
 
 		Scanner inInt = new Scanner(System.in);
 		Scanner inString = new Scanner(System.in);
+		Scanner sc3 = new Scanner(System.in);
+		
 
 		Professor p1 = new Professor("Pado", "Ulrike", "Weiblich", 4971189262811l);
 
@@ -24,6 +30,9 @@ public class Stundenplan {
 		alleKurse.add(new Kurs("Programmieren 5", "8:00 Uhr - 9:30 Uhr", "Montag", true, p1));
 		alleKurse.add(new Kurs("Programmieren 1", 1, 4, false, p1));
 		//alleKurse.add(new Kurs("Programmieren 2", 11, "Sonntag", true, p1));
+		
+		
+		kurseVonDateieinlesen(alleKurse);
 
 		ArrayList<Kurs> montag = new ArrayList<Kurs>();
 		ArrayList<Kurs> dienstag = new ArrayList<Kurs>();
@@ -34,13 +43,14 @@ public class Stundenplan {
 
 		
 
-		Scanner in = new Scanner(System.in);
+	
 		
 		kurseEinsotieren(alleKurse, montag, dienstag, mittwoch, donnerstag, freitag, samstag);
 		allesotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag);
 	
 		
 		while (true) {
+			Scanner eingabesc = new Scanner(System.in);
 			
 			//https://de.piliapp.com/symbol/line/
 			System.out.println("┌────────────────────────────────────────┐");
@@ -49,11 +59,14 @@ public class Stundenplan {
 			System.out.println("│2 ➞ Kurs suchen                         │");
 			System.out.println("│3 ➞ Kurs erstellen                      │");
 			System.out.println("│4 ➞ Stundenplan als Datei auszugeben    │");
+			System.out.println("│5 ➞ Professor erstellen - WIP           │");
 			System.out.println("│q ➞ Programm zu beenden                 │");
 			System.out.println("└────────────────────────────────────────┘");
-			System.out.print("Ihre Eingabe ➞ ");
+			System.out.println("Ihre Eingabe ➞ ");
 			
-			String eingabeSwitch=inString.nextLine();
+			
+			String eingabeSwitch=eingabesc.nextLine();
+			
 			
 			
 			switch (eingabeSwitch) {
@@ -101,7 +114,7 @@ public class Stundenplan {
 				}
 				
 				kurseEinsotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag, alleKurse);
-				
+				kurseInDateiausgeben(alleKurse);
 				
 				
 			
@@ -114,7 +127,7 @@ public class Stundenplan {
 			
 			case "4":
 				System.out.println("Welcher Dateiname soll der Stundenplan haben?");
-				String dateiname = inString.nextLine();
+				String dateiname = sc3.nextLine();
 				dateiAusgeben(montag, dienstag, mittwoch, donnerstag, freitag, samstag, dateiname);
 				break;
 				
@@ -124,6 +137,7 @@ public class Stundenplan {
 			System.out.println();
 			
 		}
+		
 		
 		
 
@@ -215,18 +229,7 @@ public class Stundenplan {
 
 				
 
-				dateiSchreiber.write(kurs.getKursname() + "\n");
-				dateiSchreiber.write("Um " + kurs.getBlockUhrzeit() + "\n");
-
-				if (kurs.isOnline()) {
-					online = "Der Kurs findet online statt\n";
-				} else {
-					online = "Der Kurs findet in Präsenz statt\n";
-				}
-				dateiSchreiber.write(online);
-				dateiSchreiber.write("Professor-ID: "+kurs.getId()+"\n\n");
-
-				
+				dateiSchreiber.write(kurs.toString());
 				ausgabe=true;
 				
 				
@@ -246,16 +249,7 @@ public class Stundenplan {
 
 				
 
-				dateiSchreiber.write(kurs.getKursname() + "\n");
-				dateiSchreiber.write("Um " + kurs.getBlockUhrzeit() + "\n");
-
-				if (kurs.isOnline()) {
-					online = "Der Kurs findet online statt\n";
-				} else {
-					online = "Der Kurs findet in Präsenz statt\n";
-				}
-				dateiSchreiber.write(online);
-				dateiSchreiber.write("Professor-ID: "+kurs.getId()+"\n\n");
+				dateiSchreiber.write(kurs.toString());
 				ausgabe=true;
 
 			}
@@ -275,16 +269,7 @@ public class Stundenplan {
 
 				
 
-				dateiSchreiber.write(kurs.getKursname() + "\n");
-				dateiSchreiber.write("Um " + kurs.getBlockUhrzeit() + "\n");
-
-				if (kurs.isOnline()) {
-					online = "Der Kurs findet online statt\n";
-				} else {
-					online = "Der Kurs findet in Präsenz statt\n";
-				}
-				dateiSchreiber.write(online);
-				dateiSchreiber.write("Professor-ID: "+kurs.getId()+"\n\n");
+				dateiSchreiber.write(kurs.toString());
 				ausgabe=true;
 
 			}
@@ -302,18 +287,7 @@ public class Stundenplan {
 			
 			for (Kurs kurs : donnerstag) {
 
-				
-
-				dateiSchreiber.write(kurs.getKursname() + "\n");
-				dateiSchreiber.write("Um " + kurs.getBlockUhrzeit() + "\n");
-
-				if (kurs.isOnline()) {
-					online = "Der Kurs findet online statt\n";
-				} else {
-					online = "Der Kurs findet in Präsenz statt\n";
-				}
-				dateiSchreiber.write(online);
-				dateiSchreiber.write("Professor-ID: "+kurs.getId()+"\n\n");
+				dateiSchreiber.write(kurs.toString());
 				ausgabe=true;
 
 			}
@@ -331,17 +305,7 @@ public class Stundenplan {
 			for (Kurs kurs : freitag) {
 
 				
-
-				dateiSchreiber.write(kurs.getKursname() + "\n");
-				dateiSchreiber.write("Um " + kurs.getBlockUhrzeit() + "\n");
-
-				if (kurs.isOnline()) {
-					online = "Der Kurs findet online statt\n";
-				} else {
-					online = "Der Kurs findet in Präsenz statt\n";
-				}
-				dateiSchreiber.write(online);
-				dateiSchreiber.write("Professor-ID: "+kurs.getId()+"\n\n");
+				dateiSchreiber.write(kurs.toString());
 				ausgabe=true;
 
 			}
@@ -360,17 +324,8 @@ public class Stundenplan {
 
 				
 
-				dateiSchreiber.write(kurs.getKursname() + "\n");
-				dateiSchreiber.write("Um " + kurs.getBlockUhrzeit() + "\n");
-
-				if (kurs.isOnline()) {
-					online = "Der Kurs findet online statt\n";
-				} else {
-					online = "Der Kurs findet in Präsenz statt\n";
-				}
-				dateiSchreiber.write(online);
-				dateiSchreiber.write("Professor-ID: "+kurs.getId()+"\n\n");
-				ausgabe=true;
+					dateiSchreiber.write(kurs.toString());
+					ausgabe=true;
 
 			
 			
@@ -407,10 +362,6 @@ public class Stundenplan {
 		if (i == 0) {
 			System.out.println("Kurs gibt es nicht!");
 		}
-	}
-
-	public static void kursAbspeichern(ArrayList<Kurs> alleKurse) {
-
 	}
 
 	public static void kurseEinsotieren(ArrayList<Kurs> alleKurse, ArrayList<Kurs> montag, ArrayList<Kurs> dienstag,
@@ -461,9 +412,48 @@ public class Stundenplan {
 		
 
 	
-	public static void kurseVonDateieinlesen() {
+	public static void kurseVonDateieinlesen(ArrayList<Kurs> alleKurse) {
+		
+			
+			try(BufferedReader dateiLeser = new BufferedReader(new FileReader(new File("/Users/york/Desktop/alleKurse.txt")))){
+				String zeile;
+
+				while ((zeile = dateiLeser.readLine()) != null) {
+					
+					
+					String[] z = zeile.split(":");
+					
+					System.out.println(z[0]);
+				
+				System.out.println(z[0]+" "+z[1]+z[2]+z[3]+z[4]);
+				
+				alleKurse.add(new Kurs(z[0],Integer.parseInt(z[1]),Integer.parseInt(z[2]),Boolean.parseBoolean(z[3]),Integer.parseInt(z[4])));
+			}
+			
+		}
+		catch(IOException e) {
+			
+		}
+	}
+	
+	public static void kurseInDateiausgeben(ArrayList<Kurs> alleKurse) {
+		try (BufferedWriter dateiSchreiber = new BufferedWriter(
+				new FileWriter(new File("/Users/york/Desktop/alleKurse.txt"), false))) {
+			
+			
+			
+			for (Kurs k: alleKurse) {
+				dateiSchreiber.write(k.toStringtoTxt()+"\n");	
+			}
+		
+	} catch (IOException e) {
+
+	}
 		
 	}
+	
+	
+	
 }
 
 

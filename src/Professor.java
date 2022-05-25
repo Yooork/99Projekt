@@ -20,10 +20,9 @@ public class Professor {
 		return "vorname.nachname@hft-stuttgart.de";
 	}
 
-	@Override
-	public String toString() {
-		return "Professor [name=" + name + ", vorname=" + vorname + ", geschlecht=" + geschlecht + ", tel=" + tel
-				+ ", eMail=" + eMail + "]";
+	
+	public String toStringtoTxt() {
+		return name+":"+vorname+":"+geschlecht+":"+ tel+ ":" + eMail+";";
 	}
 
 	public int getId() {
