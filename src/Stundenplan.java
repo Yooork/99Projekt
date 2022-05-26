@@ -26,13 +26,15 @@ public class Stundenplan {
 		Professor p1 = new Professor("Pado", "Ulrike", "Weiblich", 4971189262811l);
 
 		ArrayList<Kurs> alleKurse = new ArrayList<Kurs>();
-		alleKurse.add(new Kurs("Programmieren 2", "9:45 Uhr - 11:15 Uhr", 4, false, p1));
-		alleKurse.add(new Kurs("Programmieren 5", "8:00 Uhr - 9:30 Uhr", "Montag", true, p1));
-		alleKurse.add(new Kurs("Programmieren 1", 1, 4, false, p1));
-		alleKurse.add(new Kurs("Programmieren 2", 1, "Freitag", true, p1));
+		//kurseVonDateieinlesen(alleKurse);
+		alleKurse.add(new Kurs("Programmieren 1", "9:45 Uhr - 11:15 Uhr", 6, false, p1));
+		alleKurse.add(new Kurs("Programmieren 2", "8:00 Uhr - 9:30 Uhr", "Montag", true, p1));
+		alleKurse.add(new Kurs("Programmieren 3", 1, 5, false, p1));
+		alleKurse.add(new Kurs("Programmieren 4", 1, "Freitag", true, p1));
+		alleKurse.add(new Kurs("Progra5", 1, 3, false, p1));
 		
 		
-		kurseVonDateieinlesen(alleKurse);
+		
 
 		ArrayList<Kurs> montag = new ArrayList<Kurs>();
 		ArrayList<Kurs> dienstag = new ArrayList<Kurs>();
@@ -114,7 +116,6 @@ public class Stundenplan {
 				}
 				
 				kurseEinsotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag, alleKurse);
-				kurseInDateiausgeben(alleKurse);
 				
 				
 			
@@ -135,7 +136,7 @@ public class Stundenplan {
 				System.out.println(eingabeSwitch+" ist nicht definiert");
 			}
 			System.out.println();
-			
+			kurseInDateiausgeben(alleKurse);
 		}
 		
 		
@@ -372,42 +373,62 @@ public class Stundenplan {
 			
 			
 
-			if (a.getBlockUhrzeit() == null) {
+			if (a.getBlockUhrzeit() == null||a.getWochentagZahl()==0) {
 				e.remove();
 				System.out.println(
 						"Der Kurs " + a.getKursname() + " ist fehlerhaft und wird nicht zum Stundenplan hinzugefügt");
 			}
 
 			else {
-
-				switch (a.getWochentagZahl()) {
-
-				case 1:
-					montag.add(a);
-					break;
-				case 2:
-					dienstag.add(a);
-					break;
-				case 3:
-					mittwoch.add(a);
-					break;
-				case 4:
-					donnerstag.add(a);
-					break;
-				case 5:
-					freitag.add(a);
-					break;
-				case 6:
-					samstag.add(a);
-					break;
-				default:
-
-					break;
+				int i = 0;
+				for (Kurs z: alleKurse) {
+					if(a.getBlockeinheit()==z.getBlockeinheit()&&a.getWochentagZahl()==z.getWochentagZahl()) {
+						i++;
+						
+						
+					}
 				}
+					if(i==1) {
+						switch (a.getWochentagZahl()) {
+						
+						case 1:
+							montag.add(a);
+							break;
+						case 2:
+							dienstag.add(a);
+							break;
+						case 3:
+							mittwoch.add(a);
+							break;
+						case 4:
+							donnerstag.add(a);
+							break;
+						case 5:
+							freitag.add(a);
+							break;
+						case 6:
+							samstag.add(a);
+							break;
+						default:
+
+							break;
+						}
+						
+					}
+					else {
+						System.out.println("lkhjfdsl");
+						System.out.println(a.getBlockeinheit());
+						System.out.println(z.getBlockeinheit());
+						System.out.println(a.getWochentagZahl());
+						System.out.println(z.getWochentagZahl());
+					}
+				}
+
+				
 			}
 
 		}
-	}
+	
 		
 
 	
@@ -453,6 +474,7 @@ public class Stundenplan {
 	}
 		
 	}
+	
 	
 	
 	
