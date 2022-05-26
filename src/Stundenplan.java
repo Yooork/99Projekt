@@ -29,7 +29,7 @@ public class Stundenplan {
 		alleKurse.add(new Kurs("Programmieren 2", "9:45 Uhr - 11:15 Uhr", 4, false, p1));
 		alleKurse.add(new Kurs("Programmieren 5", "8:00 Uhr - 9:30 Uhr", "Montag", true, p1));
 		alleKurse.add(new Kurs("Programmieren 1", 1, 4, false, p1));
-		//alleKurse.add(new Kurs("Programmieren 2", 11, "Sonntag", true, p1));
+		alleKurse.add(new Kurs("Programmieren 2", 1, "Freitag", true, p1));
 		
 		
 		kurseVonDateieinlesen(alleKurse);
@@ -137,7 +137,6 @@ public class Stundenplan {
 			System.out.println();
 			
 		}
-		
 		
 		
 
@@ -417,22 +416,25 @@ public class Stundenplan {
 			
 			try(BufferedReader dateiLeser = new BufferedReader(new FileReader(new File("/Users/york/Desktop/alleKurse.txt")))){
 				String zeile;
+				
+				String []z;
 
 				while ((zeile = dateiLeser.readLine()) != null) {
 					
 					
-					String[] z = zeile.split(":");
+					z = zeile.split(";");
 					
-					System.out.println(z[0]);
+			
 				
-				System.out.println(z[0]+" "+z[1]+z[2]+z[3]+z[4]);
+			
 				
 				alleKurse.add(new Kurs(z[0],Integer.parseInt(z[1]),Integer.parseInt(z[2]),Boolean.parseBoolean(z[3]),Integer.parseInt(z[4])));
 			}
+				}
 			
-		}
+		
 		catch(IOException e) {
-			
+			System.out.println("Es wurden keine Kurse eingelesen");
 		}
 	}
 	
