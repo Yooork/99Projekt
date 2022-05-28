@@ -27,11 +27,11 @@ public class Stundenplan {
 
 		ArrayList<Kurs> alleKurse = new ArrayList<Kurs>();
 		//kurseVonDateieinlesen(alleKurse);
-		alleKurse.add(new Kurs("Programmieren 1", "9:45 Uhr - 11:15 Uhr", 6, false, p1));
-		alleKurse.add(new Kurs("Programmieren 2", "8:00 Uhr - 9:30 Uhr", "Montag", true, p1));
-		alleKurse.add(new Kurs("Programmieren 3", 1, 5, false, p1));
-		alleKurse.add(new Kurs("Programmieren 4", 1, "Freitag", true, p1));
-		alleKurse.add(new Kurs("Progra5", 1, 3, false, p1));
+		alleKurse.add(new Kurs("Programmieren 1", "9:45 Uhr - 11:15 Uhr", 1, false, p1));
+		alleKurse.add(new Kurs("Programmieren 2", "8:00 Uhr - 9:30 Uhr", 2, true, p1));
+		alleKurse.add(new Kurs("Programmieren 3", 1, 3, false, p1));
+		alleKurse.add(new Kurs("Programmieren 4 dummi", 1, 4, true, p1));
+		alleKurse.add(new Kurs("Programmieren 4", 1, 4, true, p1));
 		
 		
 		
@@ -103,6 +103,7 @@ public class Stundenplan {
 					if (wochentag.equals("1")||wochentag.equals("2")||wochentag.equals("3")||wochentag.equals("4")||wochentag.equals("5")||wochentag.equals("6")) {
 						int wochentagZahl = Integer.parseInt(wochentag);
 						alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentagZahl, online, p1));
+						System.out.print("erstellt");
 					} else {
 						alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentag, online, p1));
 					}
@@ -114,6 +115,8 @@ public class Stundenplan {
 						alleKurse.add(new Kurs(kursName, uhrzeit, wochentag, online, p1));
 					}
 				}
+				
+				
 				
 				kurseEinsotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag, alleKurse);
 				
@@ -387,8 +390,15 @@ public class Stundenplan {
 						
 						
 					}
+					
 				}
-					if(i==1) {
+				if(i>1) {
+					e.remove();
+					System.out.println("Der Kurs "+a.getKursname()+" wurde nicht erstellt, da "+a.getWochentag()+" um "+a.getBlockUhrzeit()+" bereits belegt ist.");
+				}
+				
+				
+					if(i==1||i==0) {
 						switch (a.getWochentagZahl()) {
 						
 						case 1:
@@ -415,13 +425,7 @@ public class Stundenplan {
 						}
 						
 					}
-					else {
-						System.out.println("lkhjfdsl");
-						System.out.println(a.getBlockeinheit());
-						System.out.println(z.getBlockeinheit());
-						System.out.println(a.getWochentagZahl());
-						System.out.println(z.getWochentagZahl());
-					}
+				
 				}
 
 				
