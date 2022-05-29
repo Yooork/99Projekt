@@ -1,107 +1,55 @@
 
 public class Kurs {
+	private static int zaehler = 0;
 	private String kursname;
 	private Integer blockeinheit;
 	private String blockUhrzeit;
 	private String wochentag;
 	private int wochentagZahl;
 	private boolean online;
-	private int id;
+	private int profId;
+	private int kursId;
 
-	public Kurs(String kursname, int blockeinheit, String wochentag, boolean online, Professor professor) {
-		this.kursname = kursname;
-		this.blockeinheit = blockeinheit;
-		this.wochentag = wochentag;
-		this.online = online;
-		id = professor.getId();
-
-		try {
-			blockUhrzeit = blockeinheitInBlockUhrzeit(blockeinheit);
-		} catch (ExceptionUhrzeit e) {
-			e.printStackTrace();
-		}
-		try {
-			wochentagZahl = WochentagInwochentagZahl(wochentag);
-		} catch (ExecptionTag e) {
-			e.printStackTrace();
-		}
-		
-
+	public int getKursId() {
+		return kursId;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public Kurs(String kursname, int blockeinheit, int wochentagZahl, boolean online, Professor professor) {
-		this.kursname = kursname;
-		this.blockeinheit = blockeinheit;
-		this.wochentagZahl = wochentagZahl;
-		this.online = online;
-		id = professor.getId();
-
-		try {
-			blockUhrzeit = blockeinheitInBlockUhrzeit(blockeinheit);
-		} catch (ExceptionUhrzeit e) {
-			e.printStackTrace();
-		}
-		try {
-			wochentag = wochentagZahlInWochentag(wochentagZahl);
-		} catch (ExecptionTag e) {
-			e.printStackTrace();
-		}
-		
-
-	}
-
-	public Kurs(String kursname, String blockUhrzeit, String wochentag, boolean online, Professor professor) {
-		this.kursname = kursname;
-		this.blockUhrzeit = blockUhrzeit;
-		this.wochentag = wochentag;
-		this.online = online;
-		id = professor.getId();
-
-		try {
-			wochentagZahl = WochentagInwochentagZahl(wochentag);
-		} catch (ExecptionTag e) {
-			e.printStackTrace();
-		}
-		try {
-			blockeinheit = blockUhrzeitInBlockeinheit(blockUhrzeit);
-		} catch (ExceptionUhrzeit e) {
-			e.printStackTrace();
-		}
-		
-
-	}
-
-	public Kurs(String kursname, String blockUhrzeit, int wochentagZahl, boolean online, Professor professor) {
-		this.kursname = kursname;
-		this.blockUhrzeit = blockUhrzeit;
-		this.wochentagZahl = wochentagZahl;
-		this.online = online;
-		id = professor.getId();
-
-		try {
-			wochentag = wochentagZahlInWochentag(wochentagZahl);
-		} catch (ExecptionTag e) {
-			e.printStackTrace();
-		}
-		try {
-			blockeinheit = blockUhrzeitInBlockeinheit(blockUhrzeit);
-		} catch (ExceptionUhrzeit e) {
-			e.printStackTrace();
-		}
-		
-
-	}
 	
+
+	public Kurs(String kursname, int blockeinheit, String wochentag, boolean online, int professorId) {
+		this.kursname = kursname;
+		this.blockeinheit = blockeinheit;
+		this.wochentag = wochentag;
+		this.online = online;
+		profId = professorId;
+		kursId = zaehler++;
+		
+		
+
+		try {
+			blockUhrzeit = blockeinheitInBlockUhrzeit(blockeinheit);
+		} catch (ExceptionUhrzeit e) {
+			e.printStackTrace();
+		}
+		try {
+			wochentagZahl = WochentagInwochentagZahl(wochentag);
+		} catch (ExecptionTag e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public int getProfId() {
+		return profId;
+	}
+
 	public Kurs(String kursname, int blockeinheit, int wochentagZahl, boolean online, int professorId) {
 		this.kursname = kursname;
 		this.blockeinheit = blockeinheit;
 		this.wochentagZahl = wochentagZahl;
 		this.online = online;
-		id = professorId;
+		profId = professorId;
+		kursId = zaehler++;
 
 		try {
 			blockUhrzeit = blockeinheitInBlockUhrzeit(blockeinheit);
@@ -113,11 +61,52 @@ public class Kurs {
 		} catch (ExecptionTag e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
-	
+
+	public Kurs(String kursname, String blockUhrzeit, String wochentag, boolean online, int professorId) {
+		this.kursname = kursname;
+		this.blockUhrzeit = blockUhrzeit;
+		this.wochentag = wochentag;
+		this.online = online;
+		profId = professorId;
+		kursId = zaehler++;
+
+		try {
+			wochentagZahl = WochentagInwochentagZahl(wochentag);
+		} catch (ExecptionTag e) {
+			e.printStackTrace();
+		}
+		try {
+			blockeinheit = blockUhrzeitInBlockeinheit(blockUhrzeit);
+		} catch (ExceptionUhrzeit e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public Kurs(String kursname, String blockUhrzeit, int wochentagZahl, boolean online, int professorId) {
+		this.kursname = kursname;
+		this.blockUhrzeit = blockUhrzeit;
+		this.wochentagZahl = wochentagZahl;
+		this.online = online;
+		profId = professorId;
+		kursId = zaehler++;
+
+		try {
+			wochentag = wochentagZahlInWochentag(wochentagZahl);
+		} catch (ExecptionTag e) {
+			e.printStackTrace();
+		}
+		try {
+			blockeinheit = blockUhrzeitInBlockeinheit(blockUhrzeit);
+		} catch (ExceptionUhrzeit e) {
+			e.printStackTrace();
+		}
+
+	}
+
+
 
 	public String getKursname() {
 		return kursname;
@@ -137,11 +126,17 @@ public class Kurs {
 
 	@Override
 	public String toString() {
-		return kursname + "\n" + blockUhrzeit + "\nIst der Kurs per Zoom?: " + online + "\nProfessor-ID: " + id+"\n\n";
+		return kursname + "\n" + blockUhrzeit + "\nIst der Kurs per Zoom?: " + online + "\nProfessor-ID: " + profId
+				+ "\n\n";
 	}
-	
+
+	public String toStringfuerKonsole() {
+		return kursname + "\n" + wochentag + " um " + blockUhrzeit + "\nOnline? " + online + "Kurs-ID: " + kursId
+				+ "\nProfessor-ID: " + profId + "\n\n";
+	}
+
 	public String toStringtoTxt() {
-		return kursname +";" + blockeinheit +";" +wochentagZahl+";" + online + ";" + id;
+		return kursname + ";" + blockeinheit + ";" + wochentagZahl + ";" + online + ";" + profId;
 	}
 
 	private String blockeinheitInBlockUhrzeit(int blockeinheit) throws ExceptionUhrzeit {
