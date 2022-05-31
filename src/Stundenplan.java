@@ -26,6 +26,8 @@ public class Stundenplan {
 		
 		
 			alleProfessoren.add(new Professor("Pado", "Ulrike", "Weiblich", 4971189262811l));
+			
+			professorenVonDateieinlesen(alleProfessoren);
 		
 		
 		
@@ -59,11 +61,13 @@ public class Stundenplan {
 			System.out.println("│2 ➞ Kurs suchen                         │");
 			System.out.println("│3 ➞ Kurs erstellen                      │");
 			System.out.println("│4 ➞ Stundenplan als Datei ausgeben      │");
-			System.out.println("│5 ➞ Professor erstellen - WIP           │");
-			System.out.println("│6 ➞ Kurs löschen - WIP                  │");
+			System.out.println("│5 ➞ Professor erstellen                 │");
+			System.out.println("│6 ➞ alle Professoren ausgeben           │");
+			System.out.println("│7 ➞ Kurs löschen - WIP                  │");
+			System.out.println("│8 ➞ Professor löschen - WIP             │");
 			System.out.println("│q ➞ Programm beenden                    │");
 			System.out.println("└────────────────────────────────────────┘");
-			System.out.println("Ihre Eingabe ➞ ");
+			System.out.print("Ihre Eingabe ➞ ");
 
 			String eingabeSwitch = eingabesc.nextLine();
 
@@ -96,49 +100,88 @@ public class Stundenplan {
 				System.out.println("Online?");
 				boolean online = inInt.nextBoolean();
 				
-				System.out.println("Welcher Professor hält den Kurs?");
+				System.out.println("Welcher Professor hält den Kurs?\n");
 				
 				
 				
 				for (Professor prof : alleProfessoren) {
-					System.out.println(prof.toString());
+					System.out.println(prof.toStringsimple());
 
 				}
 				
-				System.out.println("Geben Sie die richtige Professor-ID ein die Sie für den Kurs einteilen möchten: ");
+				System.out.println("Geben Sie die richtige Professor-ID ein die Sie für den Kurs einteilen möchten oder geben Sie '0' ein um einen Professor zu erstellen: ");
 				
 				int profID = inInt.nextInt();
 				
+		
 				
-				
+				if (profID==0) {
+					professorErstellen(alleProfessoren);
+					
+					System.out.println("Welcher Professor hält den Kurs?\n");
+					
+					
+					
+					for (Professor prof : alleProfessoren) {
+						System.out.println(prof.toStringsimple());
+						
+						
 
-				if (uhrzeit.equals("1") || uhrzeit.equals("2") || uhrzeit.equals("3") || uhrzeit.equals("4")
-						|| uhrzeit.equals("5") || uhrzeit.equals("6")) {
-					int uhrzeitZahl = Integer.parseInt(uhrzeit);
-					if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3") || wochentag.equals("4")
-							|| wochentag.equals("5") || wochentag.equals("6")) {
-						int wochentagZahl = Integer.parseInt(wochentag);
-						alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentagZahl, online, profID));
-
-					} else {
-						alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentag, online, profID));
 					}
-				} else {
-					if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3") || wochentag.equals("4")
-							|| wochentag.equals("5") || wochentag.equals("6")) {
-						int wochentagZahl = Integer.parseInt(wochentag);
-						alleKurse.add(new Kurs(kursName, uhrzeit, wochentagZahl, online, profID));
-					} else {
-						alleKurse.add(new Kurs(kursName, uhrzeit, wochentag, online, profID));
-					}
+					profID = inInt.nextInt();
 				}
+				
+			
+					boolean erstellt =false;
+				
+				for (Professor prof: alleProfessoren) {
+					if(prof.getId()==profID) {
+						
+						if (uhrzeit.equals("1") || uhrzeit.equals("2") || uhrzeit.equals("3") || uhrzeit.equals("4")
+								|| uhrzeit.equals("5") || uhrzeit.equals("6")) {
+							int uhrzeitZahl = Integer.parseInt(uhrzeit);
+							if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3") || wochentag.equals("4")
+									|| wochentag.equals("5") || wochentag.equals("6")) {
+								int wochentagZahl = Integer.parseInt(wochentag);
+								alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentagZahl, online, profID));
 
-//				kurseEinsotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag);
+							} else {
+								alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentag, online, profID));
+							}
+						} else {
+							if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3") || wochentag.equals("4")
+									|| wochentag.equals("5") || wochentag.equals("6")) {
+								int wochentagZahl = Integer.parseInt(wochentag);
+								alleKurse.add(new Kurs(kursName, uhrzeit, wochentagZahl, online, profID));
+							} else {
+								alleKurse.add(new Kurs(kursName, uhrzeit, wochentag, online, profID));
+							}
+						}
+						erstellt=true;
+					}
+					
+					
+				}
+				
+				if (erstellt==false) {
+					
+					System.out.println("Der Kurs wurde nicht erstellt, da '"+profID+ "' keine gültige Professor-ID ist.");
+				
+			}
+				
+				
+				
+				
+
+				
+
+				kurseEinsotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag);
 				endeVonSwitchCase();
 				break;
 
 			case "q":
 				kurseInDateiausgeben(alleKurse);
+				professorenInDateiausgeben(alleProfessoren);
 				System.exit(0);
 				break;
 
@@ -149,30 +192,19 @@ public class Stundenplan {
 				endeVonSwitchCase();
 				break;
 			case "5":
-				
-				Scanner inString3 = new Scanner(System.in);
-				
-				
-				System.out.println("Wie ist der Nachname des Professors?");
-				String name = inString3.nextLine();
-				
-				System.out.println("Wie ist der Vorname des Professors?");
-				String vorname = inString3.nextLine();
-				
-				
-				System.out.println("Was für ein Geschlecht hat der Professors?");
-				String geschlecht = inString3.nextLine();
-				
-				System.out.println("Wie ist die Telefonummer des Professors?");
-				long tel = inString3.nextLong();
-				
-				
-					alleProfessoren.add(new Professor(name, vorname, geschlecht, tel));
-			
+				professorErstellen(alleProfessoren);
 				
 				break;
 				
 			case "6":
+				
+				for(Professor p: alleProfessoren) {
+					System.out.println(p.toStringsimple());
+				}
+				
+				break;
+				
+			case "7":
 				System.out.println();
 				System.out.println("Anhand welcher Eigenschaft soll ein Kurs gelöscht werden?");
 				System.out.println("1 ➞ Name");
@@ -248,6 +280,7 @@ public class Stundenplan {
 			}
 			System.out.println();
 			kurseInDateiausgeben(alleKurse);
+			professorenInDateiausgeben(alleProfessoren);
 		}
 
 	}
@@ -614,7 +647,68 @@ public class Stundenplan {
 
 	}
 
-	public static void ghj() {
+	public static void professorErstellen(ArrayList<Professor> alleProfessoren) {
+		Scanner inString3 = new Scanner(System.in);
+		
+		
+		System.out.println("Wie ist der Nachname des Professors?");
+		String name = inString3.nextLine();
+		
+		System.out.println("Wie ist der Vorname des Professors?");
+		String vorname = inString3.nextLine();
+		
+		
+		System.out.println("Was für ein Geschlecht hat der Professors?");
+		String geschlecht = inString3.nextLine();
+		
+		System.out.println("Wie ist die Telefonummer des Professors?");
+		long tel = inString3.nextLong();
+		
+		
+			alleProfessoren.add(new Professor(name, vorname, geschlecht, tel));
+	}
+	
+	
+	public static void professorenInDateiausgeben(ArrayList<Professor> alleProfessoren) {
+		try (BufferedWriter dateiSchreiber = new BufferedWriter(
+				new FileWriter(new File("/Users/york/Desktop/alleProfessoren.txt"), false))) {
 
+			for (Professor p : alleProfessoren) {
+				dateiSchreiber.write(p.toStringtoTxt() + "\n");
+			}
+
+		} catch (IOException e) {
+
+		}
+
+	}
+	
+	public static void professorenVonDateieinlesen(ArrayList<Professor> alleProfessoren) {
+
+		try (BufferedReader dateiLeser = new BufferedReader(
+				new FileReader(new File("/Users/york/Desktop/alleProfessoren.txt")))) {
+			String zeile;
+
+			String[] z;
+
+			while ((zeile = dateiLeser.readLine()) != null) {
+
+				z = zeile.split(";");
+
+				boolean professornameexistiert = false;
+				for (Professor i : alleProfessoren) {
+
+					if (Integer.parseInt(z[5])==(i.getId())) {
+						professornameexistiert = true;
+					}
+				}
+
+				if (professornameexistiert == false) {
+					alleProfessoren.add(new Professor(z[0],z[1],z[2],Long.parseLong(z[3])));
+				}
+			}
+		} catch (IOException e) {
+			System.out.println("Es wurden keine Professoren eingelesen");
+		}
 	}
 }

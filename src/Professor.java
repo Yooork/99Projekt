@@ -1,6 +1,6 @@
 
 public class Professor {
-	private static int zaehler = 0;
+	private static int zaehler = 1;
 	private String name;
 	private String vorname;
 	private String geschlecht;
@@ -24,7 +24,10 @@ public class Professor {
 	}
 
 	public String toStringtoTxt() {
-		return name + ":" + vorname + ":" + geschlecht + ":" + tel + ":" + eMail + ";";
+		return name + ";" + vorname + ";" + geschlecht + ";" + tel + ";" + eMail +";"+ profId;
+	}
+	public String toStringsimple() {
+		return "Name: "+name + " " + vorname + " Geschlecht: " + geschlecht + " Professor-ID: "+profId;
 	}
 
 	@Override

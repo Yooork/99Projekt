@@ -1,6 +1,6 @@
 
 public class Kurs {
-	private static int zaehler = 0;
+	private static int zaehler = 1;
 	private String kursname;
 	private Integer blockeinheit;
 	private String blockUhrzeit;
@@ -131,7 +131,7 @@ public class Kurs {
 	}
 
 	public String toStringfuerKonsole() {
-		return kursname + "\n" + wochentag + " um " + blockUhrzeit + "\nOnline? " + online + "Kurs-ID: " + kursId
+		return kursname + "\n" + wochentag + " um " + blockUhrzeit + "\nOnline? " + online + "\nKurs-ID: " + kursId
 				+ "\nProfessor-ID: " + profId + "\n\n";
 	}
 
@@ -196,6 +196,7 @@ public class Kurs {
 				wochentag = ("Samstag");
 				break;
 			case 7:
+				wochentag = ("Sonntag");
 				throw new ExecptionTag("Sonntags haben wir keine Vorlesung.");
 			default:
 				// geht nicht
