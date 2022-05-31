@@ -193,7 +193,7 @@ public class Stundenplan {
 				break;
 			case "5":
 				professorErstellen(alleProfessoren);
-				
+				endeVonSwitchCase();
 				break;
 				
 			case "6":
@@ -201,7 +201,7 @@ public class Stundenplan {
 				for(Professor p: alleProfessoren) {
 					System.out.println(p.toStringsimple());
 				}
-				
+				endeVonSwitchCase();
 				break;
 				
 			case "7":
@@ -232,7 +232,7 @@ public class Stundenplan {
 						System.out.println("Es Wurde kein Kurs mit dem Namen "+eingabe1+" gefunden");
 					}
 					if(p==1)
-					
+						endeVonSwitchCase();
 					break;
 					
 				case "2":
@@ -375,7 +375,7 @@ public class Stundenplan {
 			}
 
 			if (ausgabe == false) {
-				dateiSchreiber.write("Kurs ist leer\n\n");
+				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
 			}
 
 			ausgabe = false;
@@ -388,7 +388,7 @@ public class Stundenplan {
 
 			}
 			if (ausgabe == false) {
-				dateiSchreiber.write("Kurs ist leer\n\n");
+				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
 			}
 
 			ausgabe = false;
@@ -403,7 +403,7 @@ public class Stundenplan {
 			}
 
 			if (ausgabe == false) {
-				dateiSchreiber.write("Kurs ist leer\n\n");
+				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
 			}
 
 			ausgabe = false;
@@ -418,7 +418,7 @@ public class Stundenplan {
 			}
 
 			if (ausgabe == false) {
-				dateiSchreiber.write("Kurs ist leer\n\n");
+				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
 			}
 
 			ausgabe = false;
@@ -432,7 +432,7 @@ public class Stundenplan {
 			}
 
 			if (ausgabe == false) {
-				dateiSchreiber.write("Kurs ist leer\n\n");
+				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
 			}
 
 			ausgabe = false;
@@ -447,7 +447,7 @@ public class Stundenplan {
 			}
 
 			if (ausgabe == false) {
-				dateiSchreiber.write("Kurs ist leer\n\n");
+				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
 			}
 
 			ausgabe = false;
