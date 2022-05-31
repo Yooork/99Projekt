@@ -55,13 +55,13 @@ public class Stundenplan {
 			// https://de.piliapp.com/symbol/line/
 			System.out.println("┌────────────────────────────────────────┐");
 			System.out.println("│Drücke:                                 │");
-			System.out.println("│1 ➞ alle Kurse auszugeben               │");
+			System.out.println("│1 ➞ alle Kurse ausgeben                 │");
 			System.out.println("│2 ➞ Kurs suchen                         │");
 			System.out.println("│3 ➞ Kurs erstellen                      │");
-			System.out.println("│4 ➞ Stundenplan als Datei auszugeben    │");
+			System.out.println("│4 ➞ Stundenplan als Datei ausgeben      │");
 			System.out.println("│5 ➞ Professor erstellen - WIP           │");
 			System.out.println("│6 ➞ Kurs löschen - WIP                  │");
-			System.out.println("│q ➞ Programm zu beenden                 │");
+			System.out.println("│q ➞ Programm beenden                    │");
 			System.out.println("└────────────────────────────────────────┘");
 			System.out.println("Ihre Eingabe ➞ ");
 
