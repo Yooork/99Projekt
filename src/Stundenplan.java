@@ -95,6 +95,7 @@ public class Stundenplan {
 				System.out.println("Kursname");
 				String kursName = inString.nextLine();				
 
+				int wiederholen = 0;
 				String uhrzeit;
 				while (true) { // Schleife falls die Uhrzeit falsch eingegeben wird, kann man die Uhrzeit nochmals neu eingeben
 					System.out.println("Welche Uhrzeit");	
@@ -108,7 +109,7 @@ public class Stundenplan {
 						String uhrzeitWied = inString.nextLine();
 						switch (uhrzeitWied) {
 						case "1":
-							break;
+							wiederholen = 1;
 						default:
 							continue;
 							
@@ -129,14 +130,17 @@ public class Stundenplan {
 						int wochentagWied = inInt.nextInt();
 						switch (wochentagWied) {
 						case 1:
-							break;
+							wiederholen = 1;
+							continue;
 						case 2:
 							continue;
 						}
 					}
 				}
 
-
+				if (wiederholen == 1) {
+					break;
+				}
 				
 				System.out.println("Online?");
 				boolean online = inInt.nextBoolean();
