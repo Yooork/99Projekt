@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -20,6 +21,8 @@ public class Stundenplan {
 		Scanner inInt = new Scanner(System.in);
 		Scanner inString = new Scanner(System.in);
 		Scanner sc3 = new Scanner(System.in);
+		
+		
 
 		
 		
@@ -47,10 +50,12 @@ public class Stundenplan {
 		ArrayList<Kurs> donnerstag = new ArrayList<Kurs>();
 		ArrayList<Kurs> freitag = new ArrayList<Kurs>();
 		ArrayList<Kurs> samstag = new ArrayList<Kurs>();
+		
+		ArrayList<ArrayList<Kurs> > wochentage = new ArrayList<ArrayList<Kurs>>();
 
 		kurseEinsotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag);
 
-		allesotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag);
+		allesotieren(wochentage);
 
 		while (true) {
 			Scanner eingabesc = new Scanner(System.in);
@@ -110,11 +115,17 @@ public class Stundenplan {
 						switch (uhrzeitWied) {
 						case "1":
 							wiederholen = 1;
+							break;
 						default:
 							continue;
-							
 						}
+					}
+					if (wiederholen == 1) {
+						break;
 					}	
+				}
+				if (wiederholen == 1) {
+					break;
 				}
 				
 				String wochentag;
@@ -126,18 +137,20 @@ public class Stundenplan {
 						break;
 					} else {
 						System.out.println(wochentag + " ist kein Wochentag");
-						System.out.println("Drücke 1 zum abbrechen oder drücke 2 zum wiederholen");
-						int wochentagWied = inInt.nextInt();
+						System.out.println("Um den Vorhergang zubeenden '1' eingeben andernfalls andere Eingabe tätigen");
+						String wochentagWied = inString.nextLine();
 						switch (wochentagWied) {
-						case 1:
+						case "1":
 							wiederholen = 1;
-							continue;
-						case 2:
+							break;
+						default:
 							continue;
 						}
 					}
+					if (wiederholen == 1){} {
+						break;
+					}
 				}
-
 				if (wiederholen == 1) {
 					break;
 				}
@@ -218,8 +231,7 @@ public class Stundenplan {
 				
 				
 
-				
-
+				kurseinWochentage(montag, dienstag, mittwoch, donnerstag, freitag, samstag, wochentage);
 				kurseEinsotieren(montag, dienstag, mittwoch, donnerstag, freitag, samstag);
 				endeVonSwitchCase();
 				break;
@@ -233,7 +245,8 @@ public class Stundenplan {
 			case "4":
 				System.out.println("Welcher Dateiname soll der Stundenplan haben?");
 				String dateiname = sc3.nextLine();
-				dateiAusgeben(montag, dienstag, mittwoch, donnerstag, freitag, samstag, dateiname);
+				kurseinWochentage(montag, dienstag, mittwoch, donnerstag, freitag, samstag, wochentage);
+				dateiAusgeben(wochentage, dateiname);
 				endeVonSwitchCase();
 				break;
 			case "5":
@@ -326,85 +339,32 @@ public class Stundenplan {
 			System.out.println();
 			kurseInDateiausgeben(alleKurse);
 			professorenInDateiausgeben(alleProfessoren);
+			kurseinWochentage(montag, dienstag, mittwoch, donnerstag, freitag, samstag, wochentage);
 			
 			
 			
 			
-			ArrayList<ArrayList<Kurs> > wochentage = new ArrayList<ArrayList<Kurs>>();
 			
-			wochentage.add(montag);
-			wochentage.add(dienstag);
-			wochentage.add(mittwoch);
-			wochentage.add(donnerstag);
-			wochentage.add(freitag);
+			
+			
 			
 		}
 
 	}
 
-	public static void allesotieren(ArrayList<Kurs> montag, ArrayList<Kurs> dienstag, ArrayList<Kurs> mittwoch,
-			ArrayList<Kurs> donnerstag, ArrayList<Kurs> freitag, ArrayList<Kurs> samstag) {
-		// Nach Blockeinheit sotieren
+	public static void allesotieren(ArrayList<ArrayList<Kurs>> wochentage) {
+		//Nach Blockeinheit sortieren
 
-		// in ein set alle 6 arraylisten reinmachen und dann nur einmal sotieren
+		Collections.sort(wochentage, new Comparator<ArrayList<Kurs>>() {
 
-		Collections.sort(montag, new Comparator<Kurs>() {
+
 
 			@Override
-			public int compare(Kurs o1, Kurs o2) {
-				return o1.getBlockeinheit().compareTo(o2.getBlockeinheit());
+			public int compare(ArrayList<Kurs> o1, ArrayList<Kurs> o2) {
+				return 0;
 			}
 		});
 
-		Collections.sort(dienstag, new Comparator<Kurs>() {
-
-			@Override
-			public int compare(Kurs o1, Kurs o2) {
-				return o1.getBlockeinheit().compareTo(o2.getBlockeinheit());
-			}
-		});
-
-		Collections.sort(mittwoch, new Comparator<Kurs>() {
-
-			@Override
-			public int compare(Kurs o1, Kurs o2) {
-				return o1.getBlockeinheit().compareTo(o2.getBlockeinheit());
-			}
-		});
-
-		Collections.sort(donnerstag, new Comparator<Kurs>() {
-
-			@Override
-			public int compare(Kurs o1, Kurs o2) {
-				return o1.getBlockeinheit().compareTo(o2.getBlockeinheit());
-			}
-		});
-
-		Collections.sort(freitag, new Comparator<Kurs>() {
-
-			@Override
-			public int compare(Kurs o1, Kurs o2) {
-				return o1.getBlockeinheit().compareTo(o2.getBlockeinheit());
-			}
-		});
-
-		Collections.sort(samstag, new Comparator<Kurs>() {
-
-			@Override
-			public int compare(Kurs o1, Kurs o2) {
-				return o1.getBlockeinheit().compareTo(o2.getBlockeinheit());
-			}
-		});
-
-		// Nach Namen sotieren
-		/*
-		 * Collections.sort(montag, new Comparator<Kurs>() {
-		 *
-		 * @Override public int compare(Kurs o1, Kurs o2) { return
-		 * o1.getKursname().compareTo(o2.getKursname()); } });
-		 *
-		 * for(Kurs kurs:montag) { System.out.println(kurs); }
-		 */
 
 	}
 
@@ -415,18 +375,21 @@ public class Stundenplan {
 		}
 	}
 
-	public static void dateiAusgeben(ArrayList<Kurs> montag, ArrayList<Kurs> dienstag, ArrayList<Kurs> mittwoch,
-			ArrayList<Kurs> donnerstag, ArrayList<Kurs> freitag, ArrayList<Kurs> samstag, String dateiname) {
+	public static void dateiAusgeben(ArrayList<ArrayList<Kurs>> wochentage, String dateiname) {
 
 		try (BufferedWriter dateiSchreiber = new BufferedWriter(
 				new FileWriter(new File("/Users/york/Desktop/" + dateiname + ".txt"), false))) {
 			String online;
 			boolean ausgabe = false;
-			dateiSchreiber.write("-----Montag-----\n");
+			
 
-			for (Kurs kurs : montag) {
+			for (ArrayList<Kurs> kurs : wochentage) {
+				
+				dateiSchreiber.write("-----"+"-----\n");
 
 				dateiSchreiber.write(kurs.toString());
+				
+				
 				ausgabe = true;
 
 			}
@@ -437,79 +400,79 @@ public class Stundenplan {
 
 			ausgabe = false;
 
-			dateiSchreiber.write("-----Dienstag-----\n");
-			for (Kurs kurs : dienstag) {
-
-				dateiSchreiber.write(kurs.toString());
-				ausgabe = true;
-
-			}
-			if (ausgabe == false) {
-				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
-			}
-
-			ausgabe = false;
-
-			dateiSchreiber.write("-----Mittwoch-----\n");
-
-			for (Kurs kurs : mittwoch) {
-
-				dateiSchreiber.write(kurs.toString());
-				ausgabe = true;
-
-			}
-
-			if (ausgabe == false) {
-				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
-			}
-
-			ausgabe = false;
-
-			dateiSchreiber.write("-----Donnerstag-----\n");
-
-			for (Kurs kurs : donnerstag) {
-
-				dateiSchreiber.write(kurs.toString());
-				ausgabe = true;
-
-			}
-
-			if (ausgabe == false) {
-				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
-			}
-
-			ausgabe = false;
-			dateiSchreiber.write("-----Freitag-----\n");
-
-			for (Kurs kurs : freitag) {
-
-				dateiSchreiber.write(kurs.toString());
-				ausgabe = true;
-
-			}
-
-			if (ausgabe == false) {
-				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
-			}
-
-			ausgabe = false;
-
-			dateiSchreiber.write("-----Samstag-----\n");
-
-			for (Kurs kurs : samstag) {
-
-				dateiSchreiber.write(kurs.toString());
-				ausgabe = true;
-
-			}
-
-			if (ausgabe == false) {
-				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
-			}
-
-			ausgabe = false;
-
-			System.out.println("Datei wurde erfolgreich erstellt");
+//			dateiSchreiber.write("-----Dienstag-----\n");
+//			for (Kurs kurs : dienstag) {
+//
+//				dateiSchreiber.write(kurs.toString());
+//				ausgabe = true;
+//
+//			}
+//			if (ausgabe == false) {
+//				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
+//			}
+//
+//			ausgabe = false;
+//
+//			dateiSchreiber.write("-----Mittwoch-----\n");
+//
+//			for (Kurs kurs : mittwoch) {
+//
+//				dateiSchreiber.write(kurs.toString());
+//				ausgabe = true;
+//
+//			}
+//
+//			if (ausgabe == false) {
+//				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
+//			}
+//
+//			ausgabe = false;
+//
+//			dateiSchreiber.write("-----Donnerstag-----\n");
+//
+//			for (Kurs kurs : donnerstag) {
+//
+//				dateiSchreiber.write(kurs.toString());
+//				ausgabe = true;
+//
+//			}
+//
+//			if (ausgabe == false) {
+//				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
+//			}
+//
+//			ausgabe = false;
+//			dateiSchreiber.write("-----Freitag-----\n");
+//
+//			for (Kurs kurs : freitag) {
+//
+//				dateiSchreiber.write(kurs.toString());
+//				ausgabe = true;
+//
+//			}
+//
+//			if (ausgabe == false) {
+//				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
+//			}
+//
+//			ausgabe = false;
+//
+//			dateiSchreiber.write("-----Samstag-----\n");
+//
+//			for (Kurs kurs : samstag) {
+//
+//				dateiSchreiber.write(kurs.toString());
+//				ausgabe = true;
+//
+//			}
+//
+//			if (ausgabe == false) {
+//				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
+//			}
+//
+//			ausgabe = false;
+//
+//			System.out.println("Datei wurde erfolgreich erstellt");
 
 		} catch (IOException e) {
 
@@ -541,25 +504,24 @@ public class Stundenplan {
 		
 		if(in1==1) {
 			
-			System.out.println("d32sf");
+		
+			
+			Date date = new Date();
+		      System.out.println(date.getDay());
 			
 			
-			int day = GregorianCalendar.DAY_OF_WEEK;
+			switch(date.getDate()){
 			
-			System.out.println(day);
-			
-			switch(day){
-			
-		    case GregorianCalendar.MONDAY:
+		    case 1:
 		        System.out.println("Montag");
 		        break;
 
-		    case GregorianCalendar.TUESDAY:
+		    case 2:
 		        
 		        //usw
 			
 			
-			case GregorianCalendar.WEDNESDAY:
+			case 3:
 				System.out.println("dsf");
 			}	
 			
@@ -744,7 +706,7 @@ public class Stundenplan {
 				new FileWriter(new File("/Users/york/Desktop/alleKurse.txt"), false))) {
 
 			for (Kurs k : alleKurse) {
-				dateiSchreiber.write(k.toStringtoTxt() + "\n");
+				dateiSchreiber.write(k.toStringtoTxt());
 			}
 
 		} catch (IOException e) {
@@ -827,6 +789,16 @@ public class Stundenplan {
 		} catch (IOException e) {
 			System.out.println("Es wurden keine Professoren eingelesen");
 		}
+	}
+	
+	public static void kurseinWochentage(ArrayList<Kurs> montag, ArrayList<Kurs> dienstag,
+			ArrayList<Kurs> mittwoch, ArrayList<Kurs> donnerstag, ArrayList<Kurs> freitag, ArrayList<Kurs> samstag, ArrayList<ArrayList<Kurs>>wochentage) {
+		wochentage.add(montag);
+		wochentage.add(dienstag);
+		wochentage.add(mittwoch);
+		wochentage.add(donnerstag);
+		wochentage.add(freitag);
+		wochentage.add(samstag);
 	}
 	
 	

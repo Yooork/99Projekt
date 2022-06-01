@@ -36,6 +36,8 @@ public class Kurs {
 		} catch (ExecptionTag e) {
 			e.printStackTrace();
 		}
+		
+		
 
 	}
 
