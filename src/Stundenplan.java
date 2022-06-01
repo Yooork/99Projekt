@@ -114,7 +114,7 @@ public class Stundenplan {
 							continue;
 							
 						}
-					}
+					}	
 				}
 				
 				String wochentag;
