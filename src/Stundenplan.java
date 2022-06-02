@@ -25,12 +25,20 @@ public class Stundenplan {
 
 	public static void main(String[] args) {
 
-		Scanner inInt = new Scanner(System.in);
-		Scanner inString = new Scanner(System.in);
+
+	
 
 		alleProfessoren.add(new Professor("Pado", "Ulrike", "Weiblich", 4971189262811l));
 
 		professorenVonDateieinlesen();
+		
+		
+		wochentage.add(montag);
+		wochentage.add(dienstag);
+		wochentage.add(mittwoch);
+		wochentage.add(donnerstag);
+		wochentage.add(freitag);
+		wochentage.add(samstag);
 
 		alleKurse.add(new Kurs("1", 1, 1, false, 1));
 		alleKurse.add(new Kurs("4", 1, 4, true, 1));
@@ -41,6 +49,7 @@ public class Stundenplan {
 		alleKurse.add(new Kurs("1.1", 1, 1, false, 10));
 		alleKurse.add(new Kurs("3.1", 1, 2, false, 10));
 		alleKurse.add(new Kurs("3.2", 1, 2, false, 10));
+		alleKurse.add(new Kurs("1.1", 5, 2, false, 10));
 
 //		alleKurse.add(new Kurs("sdfjksd", 1, "Mittwoch", false, 1));
 //		alleKurse.add(new Kurs("Programmieren 4 dummi", -1, 4, true, 1));
@@ -49,23 +58,30 @@ public class Stundenplan {
 
 		kurseEinsotieren();
 
-		allesotieren();
+		sortBlockeinheit();
+		
+		
+		kursAusgeben(alleKurse);
 
 		while (true) {
 			Scanner eingabesc = new Scanner(System.in);
 
 			// https://de.piliapp.com/symbol/line/
 			System.out.println("┌────────────────────────────────────────┐");
-			System.out.println("│Drücke:                                 │");
-			System.out.println("│1 ➞ alle Kurse ausgeben                 │");
-			System.out.println("│2 ➞ Kurs suchen - WIP                   │");
-			System.out.println("│3 ➞ Kurs erstellen                      │");
-			System.out.println("│4 ➞ Stundenplan als Datei ausgeben      │");
-			System.out.println("│5 ➞ Professor erstellen                 │");
-			System.out.println("│6 ➞ alle Professoren ausgeben           │");
-			System.out.println("│7 ➞ Kurs löschen - WIP                  │");
-			System.out.println("│8 ➞ Professor löschen - WIP             │");
-			System.out.println("│q ➞ Programm beenden                    │");
+			System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+			System.out.println("│▶ Kurs-Abteilung ◀                      │");
+			System.out.println("│ 1 ➞ alle ausgeben                      │");
+			System.out.println("│ 2 ➞ suchen  - WIP                      │");
+			System.out.println("│ 3 ➞ erstellen                          │");
+			System.out.println("│ 4 ➞ löschen                            │");
+			System.out.println("│▶ Professor-Abteilung ◀                 │");
+			System.out.println("│ 5 ➞ alle ausgeben                      │");
+			System.out.println("│ 6 ➞ suchen - WIP                       │");
+			System.out.println("│ 7 ➞ erstellen                          │");
+			System.out.println("│ 8 ➞ löschen                            │");
+			System.out.println("│▶ Sonstiges-Abteilung ◀                 │");
+			System.out.println("│ 9 ➞ Stundenplan als Datei ausgeben     │");
+			System.out.println("│ q ➞ Programm beenden                   │");
 			System.out.println("└────────────────────────────────────────┘");
 			System.out.print("Ihre Eingabe ➞ ");
 
@@ -74,56 +90,68 @@ public class Stundenplan {
 			switch (eingabeSwitch) {
 			case "1":// alle Kurse ausgaben
 				System.out.println();
-				ausgeben(montag);
-				ausgeben(dienstag);
-				ausgeben(mittwoch);
-				ausgeben(donnerstag);
-				ausgeben(freitag);
-				ausgeben(samstag);
+				kursAusgeben(montag);
+				kursAusgeben(dienstag);
+				kursAusgeben(mittwoch);
+				kursAusgeben(donnerstag);
+				kursAusgeben(freitag);
+				kursAusgeben(samstag);
 				endeVonSwitchCase();
 				break;
 			case "2":// Kurs suchen
-				suchen();
+				kursSuchen();
 				endeVonSwitchCase();
 				break;
 			case "3":// Kurs Erstellen
 				kursErstellenSC();
-				kurseinWochentage();
+//				kurseinWochentage();
 				einKurseinsotrieren();
 				endeVonSwitchCase();
 				break;
-
-			case "q":// Programm beenden
-				kurseInDateiausgeben();
-				professorenInDateiausgeben();
-				System.exit(0);
-				break;
-
-			case "4":// Stundenplan als Dateiausgeben
-				kurseinWochentage();
-				dateiAusgeben();
+				
+			case "4": // Kurs löschen
+				kursloeschen();
 				endeVonSwitchCase();
 				break;
-			case "5":// Professor erstellen
-				professorErstellen();
-				endeVonSwitchCase();
-				break;
-
-			case "6":
+				
+			case "5":
 				for (Professor p : alleProfessoren) {
 					System.out.println(p.toStringsimple());
 				}
 				endeVonSwitchCase();
 				break;
+				
+			case "6": //Professor suchen
+				
+				break;
+			case "7":// Professor erstellen
+				professorErstellen();
+				endeVonSwitchCase();
+				break;
 
-			case "7": // Kurs löschen
-				kursloeschen();
+			
+				
+			
+
+			
+				
+			case "8": //Professor löschen
+				professorloeschen();
+				break;
+				
+			case "9":// Stundenplan als Dateiausgeben
+//				kurseinWochentage();
+				dateiAusgeben();
 				endeVonSwitchCase();
 				break;
 				
-			case "8": //Professor löschen
+			
 				
-				
+			case "q":// Programm beenden
+				kurseInDateiausgeben();
+				professorenInDateiausgeben();
+				System.exit(0);
+				break;
 
 			default:
 				System.out.println(eingabeSwitch + " ist nicht definiert");
@@ -131,228 +159,67 @@ public class Stundenplan {
 			System.out.println();
 			kurseInDateiausgeben();
 			professorenInDateiausgeben();
-			kurseinWochentage();
+//			kurseinWochentage();
 		}
 
 	}
-
-	public static void allesotieren() {
-		// Nach Blockeinheit sortieren
-
-		Collections.sort(wochentage, new Comparator<ArrayList<Kurs>>() {
-
-			@Override
-			public int compare(ArrayList<Kurs> o1, ArrayList<Kurs> o2) {
-				return 0;
-			}
-		});
-
-	}
-
-	public static void ausgeben(ArrayList<Kurs> k) {
-		for (Kurs kurs : k) {
-			System.out.println(kurs.toStringfuerKonsole());
-
-		}
-	}
-
-	public static void dateiAusgeben() {
-		Scanner inString = new Scanner(System.in);
-
-		System.out.println("Welcher Dateiname soll der Stundenplan haben?");
-		String dateiname = inString.nextLine();
-
+	
+	
+	/*Datei Ein- und Ausgabe*/
+	public static void professorenInDateiausgeben() {
 		try (BufferedWriter dateiSchreiber = new BufferedWriter(
-				new FileWriter(new File("/Users/york/Desktop/" + dateiname + ".txt"), false))) {
+				new FileWriter(new File("/Users/york/Desktop/alleProfessoren.txt"), false))) {
 
-			boolean ausgabe = false;
-
-			for (ArrayList<Kurs> tag : wochentage) {
-
-				dateiSchreiber.write("-----" + "-----\n");
-
-				dateiSchreiber.write(tag.toString());
-
-				ausgabe = true;
-
+			for (Professor p : alleProfessoren) {
+				dateiSchreiber.write(p.toStringtoTxt() + "\n");
 			}
-
-			if (ausgabe == false) {
-				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
-			}
-
-			ausgabe = false;
-
-//			dateiSchreiber.write("-----Dienstag-----\n");
-//			for (Kurs kurs : dienstag) {
-//
-//				dateiSchreiber.write(kurs.toString());
-//				ausgabe = true;
-//
-//			}
-//			if (ausgabe == false) {
-//				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
-//			}
-//
-//			ausgabe = false;
-//
-//			dateiSchreiber.write("-----Mittwoch-----\n");
-//
-//			for (Kurs kurs : mittwoch) {
-//
-//				dateiSchreiber.write(kurs.toString());
-//				ausgabe = true;
-//
-//			}
-//
-//			if (ausgabe == false) {
-//				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
-//			}
-//
-//			ausgabe = false;
-//
-//			dateiSchreiber.write("-----Donnerstag-----\n");
-//
-//			for (Kurs kurs : donnerstag) {
-//
-//				dateiSchreiber.write(kurs.toString());
-//				ausgabe = true;
-//
-//			}
-//
-//			if (ausgabe == false) {
-//				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
-//			}
-//
-//			ausgabe = false;
-//			dateiSchreiber.write("-----Freitag-----\n");
-//
-//			for (Kurs kurs : freitag) {
-//
-//				dateiSchreiber.write(kurs.toString());
-//				ausgabe = true;
-//
-//			}
-//
-//			if (ausgabe == false) {
-//				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
-//			}
-//
-//			ausgabe = false;
-//
-//			dateiSchreiber.write("-----Samstag-----\n");
-//
-//			for (Kurs kurs : samstag) {
-//
-//				dateiSchreiber.write(kurs.toString());
-//				ausgabe = true;
-//
-//			}
-//
-//			if (ausgabe == false) {
-//				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
-//			}
-//
-//			ausgabe = false;
-//
-//			System.out.println("Datei wurde erfolgreich erstellt");
 
 		} catch (IOException e) {
 
 		}
+
 	}
+	public static void professorenVonDateieinlesen() {
 
-	public static void suchen() {
-		Scanner inString = new Scanner(System.in);
+		try (BufferedReader dateiLeser = new BufferedReader(
+				new FileReader(new File("/Users/york/Desktop/alleProfessoren.txt")))) {
+			String zeile;
 
-		int i = 0;
-		int x = 0;
+			String[] z;
 
-		System.out.println("Welcher Kurs soll gesucht werden? (Kursname)");
-		String eingabe1 = inString.nextLine();
+			while ((zeile = dateiLeser.readLine()) != null) {
 
-		for (Kurs k : alleKurse) {
+				z = zeile.split(";");
 
-			if (k.getKursname().equals(eingabe1)) {
-				x++;
-			}
-		}
+				boolean professornameexistiert = false;
+				for (Professor i : alleProfessoren) {
 
-		if (x > 1) {
-
-			System.out
-					.println("Gebe 1 ein um den nächsten Termin anzuzeigen oder eine andere Taste um alle auszugeben");
-
-			String eingabe2 = inString.nextLine();
-
-			if (eingabe2.equals("1")) {
-
-				Date date = new Date();
-
-				int tag = date.getDay();
-
-				boolean gefunden = false;
-
-				for (int i1 = 0; i1 < alleKurse.size(); i1++) {
-
-					if (alleKurse.get(i1).getKursname().equals(eingabe1)) {
-
-						if (alleKurse.get(i1).getWochentagZahl() >= tag) {
-							System.out.println("Der Nächste '" + alleKurse.get(i1).getKursname() + "'-Kurs findet um "
-									+ alleKurse.get(i1).getBlockUhrzeit() + " am " + alleKurse.get(i1).getWochentag()
-									+ " statt.");
-
-							gefunden = true;
-							break;
-						}
-
+					if (Integer.parseInt(z[5]) == (i.getId())) {
+						professornameexistiert = true;
 					}
 				}
 
-				if (gefunden == false) {
-					for (int i2 = 0; i2 < alleKurse.size(); i2++) {
-						if (alleKurse.get(i2).getKursname().equals(eingabe1)) {
-							System.out.println("Der Nächste '" + alleKurse.get(i2).getKursname() + "'-Kurs findet um "
-									+ alleKurse.get(i2).getBlockUhrzeit() + " am " + alleKurse.get(i2).getWochentag()
-									+ " statt.");
-							break;
-
-						}
-
-					}
-
+				if (professornameexistiert == false) {
+					alleProfessoren.add(new Professor(z[0], z[1], z[2], Long.parseLong(z[3])));
 				}
-
-			} else {
-
-				for (Kurs k : alleKurse) {
-					if (k.getKursname().equals(eingabe1)) {
-						System.out.println(k.getKursname() + " findet um " + k.getBlockUhrzeit() + " am "
-								+ k.getWochentag() + " statt.");
-					}
-				}
-
 			}
-
-		}
-
-		if (x == 1) {
-
-			for (Kurs e : alleKurse) {
-
-				if (e.getKursname().equals(eingabe1)) {
-					System.out.println(e.getKursname() + " findet um " + e.getBlockUhrzeit() + " am " + e.getWochentag()
-							+ " statt.");
-					i++;
-				}
-
-			}
-		}
-		if (x == 0) {
-			System.out.println("Den Kurs '" + eingabe1 + "' gibt es nicht!");
+		} catch (IOException e) {
+			System.out.println("Es wurden keine Professoren eingelesen");
 		}
 	}
+	public static void kurseInDateiausgeben() {
+		try (BufferedWriter dateiSchreiber = new BufferedWriter(
+				new FileWriter(new File("/Users/york/Desktop/alleKurse.txt"), false))) {
 
+			for (Kurs k : alleKurse) {
+				dateiSchreiber.write(k.toStringtoTxt() + ("\n"));
+			}
+
+		} catch (IOException e) {
+
+		}
+
+	}
 	public static void kurseVonDateieinlesen() {
 
 		try (BufferedReader dateiLeser = new BufferedReader(
@@ -382,21 +249,68 @@ public class Stundenplan {
 			System.out.println("Es wurden keine Kurse eingelesen");
 		}
 	}
+	public static void dateiAusgeben() {
+		Scanner inString = new Scanner(System.in);
 
-	public static void kurseInDateiausgeben() {
+		System.out.println("Welcher Dateiname soll der Stundenplan haben?");
+		String dateiname = inString.nextLine();
+
 		try (BufferedWriter dateiSchreiber = new BufferedWriter(
-				new FileWriter(new File("/Users/york/Desktop/alleKurse.txt"), false))) {
+				new FileWriter(new File("/Users/york/Desktop/" + dateiname + ".txt"), false))) {
 
-			for (Kurs k : alleKurse) {
-				dateiSchreiber.write(k.toStringtoTxt() + ("\n"));
+			boolean ausgabe = false;
+
+
+			
+			
+			System.out.println(wochentage.size());
+			
+			String[] idk = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"};
+			
+			for(int i=0; i<wochentage.size();i++) {
+				
+				dateiSchreiber.write("-----"+ idk[i] +"-----\n");
+				
+				for(int z=0; z<wochentage.get(i).size();z++) {
+
+				
+
+				dateiSchreiber.write(wochentage.get(i).get(z).toString());
+
+				ausgabe = true;
+
 			}
+		}
+
+			if (ausgabe == false) {
+				dateiSchreiber.write("Vorlesungsfreier Tag\n\n");
+			}
+
+			ausgabe = false;
+
+
 
 		} catch (IOException e) {
 
 		}
+	}
+
+	
+	/*Rest*/
+	public static void sortBlockeinheit() {
+		// Nach Blockeinheit sortieren
+
+		Collections.sort(wochentage, new Comparator<ArrayList<Kurs>>() {
+
+			@Override
+			public int compare(ArrayList<Kurs> o1, ArrayList<Kurs> o2) {
+				return 0;
+			}
+		});
 
 	}
 
+	
 	public static void endeVonSwitchCase() {
 		Scanner eingabesc2 = new Scanner(System.in);
 		System.out.println("\nUm das Programm zubeenden 'q' eingeben andernfalls andere Eingabe tätigen");
@@ -408,76 +322,7 @@ public class Stundenplan {
 
 	}
 
-	public static void professorErstellen() {
-		Scanner inString3 = new Scanner(System.in);
-
-		System.out.println("Wie ist der Nachname des Professors?");
-		String name = inString3.nextLine();
-
-		System.out.println("Wie ist der Vorname des Professors?");
-		String vorname = inString3.nextLine();
-
-		System.out.println("Was für ein Geschlecht hat der Professors?");
-		String geschlecht = inString3.nextLine();
-
-		System.out.println("Wie ist die Telefonummer des Professors?");
-		long tel = inString3.nextLong();
-
-		alleProfessoren.add(new Professor(name, vorname, geschlecht, tel));
-	}
-
-	public static void professorenInDateiausgeben() {
-		try (BufferedWriter dateiSchreiber = new BufferedWriter(
-				new FileWriter(new File("/Users/york/Desktop/alleProfessoren.txt"), false))) {
-
-			for (Professor p : alleProfessoren) {
-				dateiSchreiber.write(p.toStringtoTxt() + "\n");
-			}
-
-		} catch (IOException e) {
-
-		}
-
-	}
-
-	public static void professorenVonDateieinlesen() {
-
-		try (BufferedReader dateiLeser = new BufferedReader(
-				new FileReader(new File("/Users/york/Desktop/alleProfessoren.txt")))) {
-			String zeile;
-
-			String[] z;
-
-			while ((zeile = dateiLeser.readLine()) != null) {
-
-				z = zeile.split(";");
-
-				boolean professornameexistiert = false;
-				for (Professor i : alleProfessoren) {
-
-					if (Integer.parseInt(z[5]) == (i.getId())) {
-						professornameexistiert = true;
-					}
-				}
-
-				if (professornameexistiert == false) {
-					alleProfessoren.add(new Professor(z[0], z[1], z[2], Long.parseLong(z[3])));
-				}
-			}
-		} catch (IOException e) {
-			System.out.println("Es wurden keine Professoren eingelesen");
-		}
-	}
-
-	public static void kurseinWochentage() {
-		wochentage.add(montag);
-		wochentage.add(dienstag);
-		wochentage.add(mittwoch);
-		wochentage.add(donnerstag);
-		wochentage.add(freitag);
-		wochentage.add(samstag);
-	}
-
+	/*Rest -> Kurs*/
 	public static void kurseEinsotieren() {
 
 		for (int x = 0; x < alleKurse.size(); x++) {
@@ -542,8 +387,7 @@ public class Stundenplan {
 			}
 		}
 	}
-
-
+	
 	public static void einKurseinsotrieren() {
 
 		int x = alleKurse.size() - 1;
@@ -593,7 +437,7 @@ public class Stundenplan {
 				break;
 			case 6:
 				samstag.add(neuerKurs);
-
+				
 				break;
 			default:
 				System.out.println("2");
@@ -604,6 +448,133 @@ public class Stundenplan {
 
 	}
 
+
+	
+	/*Kurse*/
+	public static void kursAusgeben(ArrayList<Kurs> k) {
+		for (Kurs kurs : k) {
+			System.out.println(kurs.toStringfuerKonsole());
+
+		}
+	}
+
+	
+	public static void kursSuchen() {
+		Scanner inString = new Scanner(System.in);
+
+		int i = 0;
+		int x = 0;
+
+		System.out.println("Welcher Kurs soll gesucht werden? (Kursname)");
+		String eingabe1 = inString.nextLine();
+
+		for (Kurs k : alleKurse) {
+
+			if (k.getKursname().equals(eingabe1)) {
+				x++;
+			}
+		}
+
+		if (x > 1) {
+
+			System.out.println("Gebe 1 ein um den nächsten Termin anzuzeigen oder eine andere Taste um alle auszugeben");
+
+			String eingabe2 = inString.nextLine();
+
+			if (eingabe2.equals("1")) {
+
+				Date date = new Date();
+
+//				int tag = date.getDay();
+				int tag = 2;
+
+				boolean gefunden = false;
+				
+//				int i1=0;
+				
+				
+				for(int i1=0; i1<wochentage.size();i1++) {
+//					i1++;
+		
+					if(gefunden==false) {
+					for(int z=0; z<wochentage.get(i1).size();z++) {
+						
+						if(wochentage.get(i1).get(z).getKursname().equals(eingabe1)) {
+							System.out.println("Der Nächste '" + wochentage.get(i1).get(z).getKursname() + "'-Kurs findet um "
+									+ alleKurse.get(i1).getBlockUhrzeit() + " am " + alleKurse.get(i1).getWochentag()
+									+ " statt.");
+//
+							gefunden = true;
+							break;	
+						}
+					}
+					}
+				}
+
+					
+
+				
+				if (gefunden == false) {
+					for(int i2=0; i2<wochentage.size();i2++) {
+						
+						
+						
+						for(int z=0; z<wochentage.get(i2).size();z++) {
+							if(wochentage.get(i2).get(z).getKursname().equals(eingabe1)) {
+								System.out.println("Der Nächste '" + wochentage.get(i2).get(z).getKursname() + "'-Kurs findet um "
+										+ alleKurse.get(i2).getBlockUhrzeit() + " am " + alleKurse.get(i2).getWochentag()
+										+ " statt.");
+								break;
+							}
+						}
+					}
+					
+					
+//					for (int i2 = 0; i2 < alleKurse.size(); i2++) {
+//						if (alleKurse.get(i2).getKursname().equals(eingabe1)) {
+//							System.out.println("Der Nächste '" + alleKurse.get(i2).getKursname() + "'-Kurs findet um "
+//									+ alleKurse.get(i2).getBlockUhrzeit() + " am " + alleKurse.get(i2).getWochentag()
+//									+ " statt.");
+//							
+
+						}
+
+					
+
+				
+
+			 else {
+
+				for (Kurs k : alleKurse) {
+					if (k.getKursname().equals(eingabe1)) {
+						System.out.println(k.getKursname() + " findet um " + k.getBlockUhrzeit() + " am "
+								+ k.getWochentag() + " statt.");
+					}
+				}
+
+			}
+
+		}
+		}
+
+		if (x == 1) {
+
+			for (Kurs e : alleKurse) {
+
+				if (e.getKursname().equals(eingabe1)) {
+					System.out.println(e.getKursname() + " findet um " + e.getBlockUhrzeit() + " am " + e.getWochentag()
+							+ " statt.");
+					i++;
+				}
+
+			}
+		}
+		if (x == 0) {
+			System.out.println("Den Kurs '" + eingabe1 + "' gibt es nicht!");
+		}
+	}
+
+	
 	public static void kursErstellenSC() {
 		Scanner inString = new Scanner(System.in);
 		Scanner inInt = new Scanner(System.in);
@@ -767,20 +738,77 @@ public class Stundenplan {
 			}
 
 			if (p == 0) {
-				System.out.println("Es Wurde kein Kurs mit dem Namen " + eingabe1 + " gefunden");
+				System.out.println("Es wurde kein Kurs mit dem Namen " + eingabe1 + " gefunden");
 			}
-			if (p == 1)
-				endeVonSwitchCase();
+			if (p == 1) {
+				for (Kurs k: alleKurse) {
+					if (k.getKursname().equals(eingabe1)) {
+						
+						alleKurse.remove(k);
+						System.out.println("Der Kurs '"+k.getKursname()+"' wurde entfernt");
+						break;
+						
+					}
+			}
+			}
+			
+			if (p>1) {
+				for (Kurs k : alleKurse) {
+					
+					if(eingabe1.equals(k.getKursname())) {
+					System.out.print(k.toStringfuerKonsole());
+					}
+				}
+				
+				System.out.println("Es wurden "+p+" Kurse gefunden bitte gebe die Kurs ID ein:");
+				int eingabe5 = inInt.nextInt();
+				
+				int entfernteKurse = 0;
+				
+				
+
+				for (int x = 0; x < alleKurse.size(); x++) {
+					// Kurs a = e.next();
+					Kurs k = alleKurse.get(x);
+
+					if (k.getKursId() == eingabe5) {
+						// e.remove();
+						
+						
+						System.out.println("Der Kurs '"+alleKurse.get(x).getKursname()+"' mit der Kurs-ID '"+alleKurse.get(x).getKursId()+"' wurde entfernt.");
+						alleKurse.remove(x);
+						entfernteKurse++;
+						
+					}
+
+				}
+				
+				if (entfernteKurse==0) {
+					System.out.println("Es wurde kein Kurs mit dieser Kurs-ID gefunden.");
+				}
+				
+				
+				
+			}
+				
+			
+			
+			
+			
 			break;
 
 		case "2":
-			System.out.println("Welche Kurs-ID hat der Kurs den du löschen möchtest?");
-
+			
 			for (Kurs k : alleKurse) {
 				System.out.print(k.toStringfuerKonsole());
 			}
+			System.out.println("Welche Kurs-ID hat der Kurs den du löschen möchtest?");
+
+			
 
 			int eingabe2 = inInt.nextInt();
+			
+			int entfernteKurse = 0;
 
 			for (int x = 0; x < alleKurse.size(); x++) {
 				// Kurs a = e.next();
@@ -789,13 +817,142 @@ public class Stundenplan {
 				if (k.getKursId() == eingabe2) {
 					// e.remove();
 					alleKurse.remove(x);
+					entfernteKurse++;
+					System.out.println("Der Kurs '"+alleKurse.get(x).getKursname()+"' wurde entfernt");
+					
 				}
 
 			}
-			for (Kurs k : alleKurse) {
-				System.out.print(k.toStringfuerKonsole());
+			
+			if (entfernteKurse==0) {
+				System.out.println("Es wurde kein Kurs mit dieser Kurs-ID gefunden.");
 			}
+			
 		}
 
 	}
+	
+	
+	/*Professor*/
+	
+
+
+public static void professorErstellen() {
+		Scanner inString3 = new Scanner(System.in);
+
+		System.out.println("Wie ist der Nachname des Professors?");
+		String name = inString3.nextLine();
+
+		System.out.println("Wie ist der Vorname des Professors?");
+		String vorname = inString3.nextLine();
+
+		System.out.println("Was für ein Geschlecht hat der Professors?");
+		String geschlecht = inString3.nextLine();
+
+		System.out.println("Wie ist die Telefonummer des Professors?");
+		long tel = inString3.nextLong();
+
+		alleProfessoren.add(new Professor(name, vorname, geschlecht, tel));
+	}
+
+	
+
+
+
+	
+	
+
+public static void professorloeschen() {
+		Scanner inString = new Scanner(System.in);
+		Scanner inInt = new Scanner(System.in);
+
+		System.out.println("Anhand welcher Eigenschaft soll der Professor gelöscht werden?");
+		System.out.println("1 ➞ Name");
+		System.out.println("2 ➞ Professor-ID");
+		System.out.println("andere Taste ➞ abbrechen");
+
+		String eingabe1 = inString.nextLine();
+
+		switch (eingabe1) {
+
+		case "1":
+			System.out.println("Geben Sie den Nachnamen des Professors ein:");
+			String eingabe2 = inString.nextLine();
+			
+			
+
+			int p = 0;
+
+			for (Professor p1: alleProfessoren) {
+				if (p1.getName().equals(eingabe2)) {
+//					
+					p++;
+				}
+			}
+
+			if (p == 0) {
+				System.out.println("Es wurde kein Professor mit dem Namen " + eingabe2 + " gefunden");
+			}
+			
+			if (p == 1) {
+				for (Professor p1: alleProfessoren) {
+					if (p1.getName().equals(eingabe2)) {
+						
+						alleProfessoren.remove(p1);
+						System.out.println(p1.toStringsimple()+" wurde gelöscht");
+						break;
+						
+					}
+				}
+			}
+			
+			if (p>1) {
+				System.out.println("Es wurden "+p+" Professoren gefunden");
+				System.out.println("Geben Sie den Vorname des Professors ein:");
+				String eingabe3 = inString.nextLine();
+				for (Professor p1: alleProfessoren) {
+				if (p1.getName().equals(eingabe2)&&p1.getVorname().equals(eingabe3)) {
+					alleProfessoren.remove(p1);
+					System.out.println(p1.toStringsimple()+" wurde gelöscht");
+					break;
+				}
+				
+			}
+			}
+			
+				
+			break;
+
+		case "2":
+			
+			for (Professor prof : alleProfessoren) {
+				System.out.println(prof.toStringsimple());
+			}
+			
+			
+			System.out.println("\nWelche Professor-ID hat der Professor den du löschen möchtest?");
+
+			
+
+			int eingabe4 = inInt.nextInt();
+
+			for (int x = 0; x < alleProfessoren.size(); x++) {
+				// Kurs a = e.next();
+				Professor prof = alleProfessoren.get(x);
+
+				if (prof.getId() == eingabe4) {
+					// e.remove();
+					alleProfessoren.remove(x);
+					System.out.println("Der Professor wurde erfolgreich gelöscht");
+				}
+				else {
+					System.out.println("Der Professor wurde nicht gelöscht, da diese ID nicht hinterlegt ist.");
+				}
+
+			}
+			
+		}
+		
+	}
+
 }

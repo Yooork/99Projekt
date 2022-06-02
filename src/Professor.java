@@ -36,6 +36,34 @@ public class Professor {
 				+ ", eMail=" + eMail + ", profId=" + profId + "]";
 	}
 
+	public static int getZaehler() {
+		return zaehler;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getVorname() {
+		return vorname;
+	}
+
+	public String getGeschlecht() {
+		return geschlecht;
+	}
+
+	public long getTel() {
+		return tel;
+	}
+
+	public String geteMail() {
+		return eMail;
+	}
+
+	public int getProfId() {
+		return profId;
+	}
+
 	public int getId() {
 		return profId;
 	}
