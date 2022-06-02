@@ -14,9 +14,8 @@ public class Professor {
 		this.geschlecht = geschlecht;
 		this.tel = tel;
 		eMail = eMail(vorname, name);
-		profId=zaehler++;
-		
-		
+		profId = zaehler++;
+
 	}
 
 	public String eMail(String vorname, String name) {
@@ -24,10 +23,11 @@ public class Professor {
 	}
 
 	public String toStringtoTxt() {
-		return name + ";" + vorname + ";" + geschlecht + ";" + tel + ";" + eMail +";"+ profId;
+		return name + ";" + vorname + ";" + geschlecht + ";" + tel + ";" + eMail + ";" + profId;
 	}
+
 	public String toStringsimple() {
-		return "Name: "+name + " " + vorname + " Geschlecht: " + geschlecht + " Professor-ID: "+profId;
+		return "Name: " + name + " " + vorname + " Geschlecht: " + geschlecht + " Professor-ID: " + profId;
 	}
 
 	@Override

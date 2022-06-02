@@ -14,8 +14,6 @@ public class Kurs {
 		return kursId;
 	}
 
-	
-
 	public Kurs(String kursname, int blockeinheit, String wochentag, boolean online, int professorId) {
 		this.kursname = kursname;
 		this.blockeinheit = blockeinheit;
@@ -23,8 +21,6 @@ public class Kurs {
 		this.online = online;
 		profId = professorId;
 		kursId = zaehler++;
-		
-		
 
 		try {
 			blockUhrzeit = blockeinheitInBlockUhrzeit(blockeinheit);
@@ -36,8 +32,6 @@ public class Kurs {
 		} catch (ExecptionTag e) {
 			e.printStackTrace();
 		}
-		
-		
 
 	}
 
@@ -107,8 +101,6 @@ public class Kurs {
 		}
 
 	}
-
-
 
 	public String getKursname() {
 		return kursname;
