@@ -19,7 +19,7 @@ public class Professor {
 	}
 
 	public String eMail(String vorname, String name) {
-		return "vorname.nachname@hft-stuttgart.de";
+		return vorname + "." + name + "@hft-stuttgart.de";
 	}
 
 	public String toStringtoTxt() {

@@ -125,8 +125,8 @@ public class Kurs {
 	}
 
 	public String toStringfuerKonsole() {
-		return kursname + "\n" + wochentag + " um " + blockUhrzeit + "\nOnline? " + online + "\nKurs-ID: " + kursId
-				+ "\nProfessor-ID: " + profId + "\n\n";
+		return "Kurs: " + kursname + "\n Wann: " + wochentag + " um " + blockUhrzeit + "\nOnline? " + online
+				+ "\nKurs-ID: " + kursId + "\nProfessor-ID: " + profId + "\n\n";
 	}
 
 	public String toStringtoTxt() {
