@@ -13,6 +13,10 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class Stundenplan {
+	/*
+	 * Alle ArrayLists werden mit static angelegt, damit innerhalb der ganzen Klasse
+	 * auf diese zugegriffen werden kann
+	 */
 	static ArrayList<Kurs> alleKurse = new ArrayList<Kurs>();
 	static ArrayList<Professor> alleProfessoren = new ArrayList<Professor>();
 	static ArrayList<Kurs> montag = new ArrayList<Kurs>();
@@ -24,11 +28,10 @@ public class Stundenplan {
 	static ArrayList<ArrayList<Kurs>> wochentage = new ArrayList<ArrayList<Kurs>>();
 
 	public static void main(String[] args) {
-
-		alleProfessoren.add(new Professor("Pado", "Ulrike", "Weiblich", 4971189262811l));
-
-		professorenVonDateieinlesen();
-
+		/*
+		 * Jede ArrayList für die einzelnen Wochentage werden zu einer großen ArrayList
+		 * namens 'wochentage' hinzugefügt, um den Code übersichtlicher zugestallten
+		 */
 		wochentage.add(montag);
 		wochentage.add(dienstag);
 		wochentage.add(mittwoch);
@@ -36,30 +39,62 @@ public class Stundenplan {
 		wochentage.add(freitag);
 		wochentage.add(samstag);
 
-		alleKurse.add(new Kurs("1", 1, 1, false, 1));
-		alleKurse.add(new Kurs("4", 1, 4, true, 1));
-		alleKurse.add(new Kurs("4", 1, 2, true, 1));
-		alleKurse.add(new Kurs("4", 1, 3, false, 1));
-		alleKurse.add(new Kurs("5", 1, 6, false, 1));
-		alleKurse.add(new Kurs("6", 1, 5, false, 10));
-		alleKurse.add(new Kurs("1.1", 1, 1, false, 10));
-		alleKurse.add(new Kurs("3.1", 1, 2, false, 10));
-		alleKurse.add(new Kurs("3.2", 1, 2, false, 10));
-		alleKurse.add(new Kurs("1.1", 5, 2, false, 10));
+		/* Professoren können hardcoded hinzugefügt werden */
+		alleProfessoren.add(new Professor("Pado", "Ulrike", "Weiblich", 4971189262811l));
+
+		/* Kurse können hardcodes hinzugefügt werden */
+		/* Wenn bereits eine Blockeinheit belegt ist wird dieser nicht hinzugefügt */
+		/* 4x der selbe Kurs, nur auf 4 unterschiedliche Arten angelegt */
+//		alleKurse.add(new Kurs("Programmieren 1", 1, 1, false, 1, 1));
+//		alleKurse.add(new Kurs("Programmieren 1", 8:00 Uhr - 9:30 Uhr, 1, false, 1, 1));
+//		alleKurse.add(new Kurs("Programmieren 1", "8:00 Uhr - 9:30 Uhr", "Montag", false, 1, 1));
+//		alleKurse.add(new Kurs("Programmieren 1", 1, "Montag", false, 1, 1));
+
+//		alleKurse.add(new Kurs("1", 1, 1, false, 1, 1));
+//		alleKurse.add(new Kurs("4", 1, 4, true, 000,1));
+//		alleKurse.add(new Kurs("4", 1, 2, true, 000,1));
+//		alleKurse.add(new Kurs("4", 1, 3, false, 1,1));
+//		alleKurse.add(new Kurs("5", 1, 6, false, 1,1));
+//		alleKurse.add(new Kurs("6", 1, 5, false, 1,10));
+//		alleKurse.add(new Kurs("1.1", 1, 1, false, 1,10));
+//		alleKurse.add(new Kurs("3.1", 1, 2, false, 1,10));
+//		alleKurse.add(new Kurs("3.2", 1, 2, false, 1,10));
+//		alleKurse.add(new Kurs("1.1", 5, 2, false, 1, 10));
 
 //		alleKurse.add(new Kurs("sdfjksd", 1, "Mittwoch", false, 1));
+
+		/* Wenn Fehler beim erstellen entstehen werden sie aussotiert */
 //		alleKurse.add(new Kurs("Programmieren 4 dummi", -1, 4, true, 1));
 
+		/*
+		 * alle Professoren werden von einer Datei eingelesen, die bei dem letzten
+		 * ausführen des Programmes abgespeichert wurden
+		 */
+		professorenVonDateieinlesen();
+		/*
+		 * alle Kurse werden von einer Datei eingelesen, die bei dem letzten ausführen
+		 * des Programmes abgespeichert wurden
+		 */
 		kurseVonDateieinlesen();
-
+		/*
+		 * alle hinzugefügen Kurse werden überprüft, ob doppelte Kurseinheiten oder
+		 * fehlerhafte Kurse vorhanden sind
+		 */
 		kurseEinsotieren();
-
+		/*
+		 * die ArrayList 'wochentage' (somit alle korrekt erstellen Kurse) nach ihrer
+		 * Blockeinheit sotiert
+		 */
 		sortBlockeinheit();
 
+		/*
+		 * Endlos-Schleife damit das Interface nach jeder ausgeführten Methode angezeigt
+		 * wird
+		 */
 		while (true) {
 			Scanner eingabesc = new Scanner(System.in);
 
-			// https://de.piliapp.com/symbol/line/
+			// Website von den folgenden Sonderzeichen: https://de.piliapp.com/symbol/line/
 			System.out.println("┌────────────────────────────────────────┐");
 			System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
 			System.out.println("│▶ Kurs-Abteilung ◀                      │");
@@ -97,8 +132,6 @@ public class Stundenplan {
 				break;
 			case "3":// Kurs Erstellen
 				kursErstellenSC();
-//				kurseinWochentage();
-				einKurseinsotrieren();
 				endeVonSwitchCase();
 				break;
 
@@ -129,14 +162,13 @@ public class Stundenplan {
 				break;
 
 			case "9":// Stundenplan als Dateiausgeben
-//				kurseinWochentage();
 				dateiAusgeben();
 				endeVonSwitchCase();
 				break;
 
 			case "q":// Programm beenden
-				kurseInDateiausgeben();
-				professorenInDateiausgeben();
+				kurseInDateiausgeben(); 
+				professorenInDateiausgeben(); 
 				System.exit(0);
 				break;
 
@@ -144,18 +176,20 @@ public class Stundenplan {
 				System.out.println(eingabeSwitch + " ist nicht definiert");
 			}
 			System.out.println();
-			kurseInDateiausgeben();
-			professorenInDateiausgeben();
-//			kurseinWochentage();
+			kurseInDateiausgeben(); 
+			professorenInDateiausgeben(); 
 		}
 
 	}
 
 	/* Datei Ein- und Ausgabe */
+
 	public static void professorenInDateiausgeben() {
+		// Professoren werden mit einer for-each-Schleife in einer Textdatei, auf dem Desktop abgespeichert, um sie nach einem Programm-Stopp zubehalten
 		try (BufferedWriter dateiSchreiber = new BufferedWriter(
 				new FileWriter(new File("/Users/york/Desktop/alleProfessoren.txt"), false))) {
 
+			
 			for (Professor p : alleProfessoren) {
 				dateiSchreiber.write(p.toStringtoTxt() + "\n");
 			}
@@ -167,7 +201,7 @@ public class Stundenplan {
 	}
 
 	public static void professorenVonDateieinlesen() {
-
+//		 Professoren werden von einer Datei eingelesen, die auf dem Desktop liegt. Diese Datei wurde von der Methode 'professorenInDateiausgeben()' erstellt.
 		try (BufferedReader dateiLeser = new BufferedReader(
 				new FileReader(new File("/Users/york/Desktop/alleProfessoren.txt")))) {
 			String zeile;
@@ -179,9 +213,9 @@ public class Stundenplan {
 				z = zeile.split(";");
 
 				boolean professornameexistiert = false;
-				for (Professor i : alleProfessoren) {
+				for (Professor p : alleProfessoren) {
 
-					if (Integer.parseInt(z[5]) == (i.getId())) {
+					if (Integer.parseInt(z[5]) == (p.getId())) {
 						professornameexistiert = true;
 					}
 				}
@@ -196,11 +230,14 @@ public class Stundenplan {
 	}
 
 	public static void kurseInDateiausgeben() {
+		// Kurse werden mit einer for-each-Schleife in einer Textdatei, auf dem Desktop abgespeichert, um sie nach einem Programm-Stopp zubehalten
+		
 		try (BufferedWriter dateiSchreiber = new BufferedWriter(
 				new FileWriter(new File("/Users/york/Desktop/alleKurse.txt"), false))) {
 
+			
 			for (Kurs k : alleKurse) {
-				dateiSchreiber.write(k.toStringtoTxt() + ("\n"));
+				dateiSchreiber.write(k.toStringforbackup() + ("\n"));
 			}
 
 		} catch (IOException e) {
@@ -210,7 +247,7 @@ public class Stundenplan {
 	}
 
 	public static void kurseVonDateieinlesen() {
-
+//		 Kurse werden von einer Datei eingelesen, die auf dem Desktop liegt. Diese Datei wurde von der Methode 'professorenInDateiausgeben()' erstellt.
 		try (BufferedReader dateiLeser = new BufferedReader(
 				new FileReader(new File("/Users/york/Desktop/alleKurse.txt")))) {
 			String zeile;
@@ -231,7 +268,7 @@ public class Stundenplan {
 
 				if (kursnameexistiert == false) {
 					alleKurse.add(new Kurs(z[0], Integer.parseInt(z[1]), Integer.parseInt(z[2]),
-							Boolean.parseBoolean(z[3]), Integer.parseInt(z[4])));
+							Boolean.parseBoolean(z[3]), Integer.parseInt(z[4]), Integer.parseInt(z[5])));
 				}
 			}
 		} catch (IOException e) {
@@ -240,6 +277,7 @@ public class Stundenplan {
 	}
 
 	public static void dateiAusgeben() {
+		// Kurse werden mit 2 for-Schleifen in einer Datei ausgegeben. Die erste for-Schleife gibt den Wochentag an, die zweite gibt den Kurs an. Hier arbeiten wir mit der Methode 'get()' um den Index herauszufinfen, falls ein Wochentag, keine Kurse besitz wird dies in der Datei entsprechend gekennzeichnet
 		Scanner inString = new Scanner(System.in);
 
 		System.out.println("Welcher Dateiname soll der Stundenplan haben?");
@@ -250,13 +288,11 @@ public class Stundenplan {
 
 			boolean ausgabe = false;
 
-			System.out.println(wochentage.size());
-
-			String[] idk = { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag" };
+			String[] WochentageinArray = { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag" };
 
 			for (int i = 0; i < wochentage.size(); i++) {
 
-				dateiSchreiber.write("-----" + idk[i] + "-----\n");
+				dateiSchreiber.write("-----" + WochentageinArray[i] + "-----\n");
 
 				for (int z = 0; z < wochentage.get(i).size(); z++) {
 
@@ -280,7 +316,7 @@ public class Stundenplan {
 
 	/* Rest */
 	public static void sortBlockeinheit() {
-		// Nach Blockeinheit sortieren
+		// Die Kurse in der ArrayList 'wochentage' werden nach ihrer Blockeinheit sortiert
 
 		Collections.sort(wochentage, new Comparator<ArrayList<Kurs>>() {
 
@@ -305,12 +341,11 @@ public class Stundenplan {
 
 	/* Rest -> Kurs */
 	public static void kurseEinsotieren() {
-
+		//alle Kurse werden überprüft, ob sie fehlerhaft erstellt wurden. Dann überprüft, ob eine Blockeinheit doppelt belegt ist, falls einer der beiden Fälle eintritt wird der Kurs aus der ArrayList entfernt. Andernfalls wird der Kurs in seine entsprechende ArrayList eingefügt. Diese Methode wird nur 1x ausgeführt und überprüft alle Kurse.
 		for (int x = 0; x < alleKurse.size(); x++) {
-			Kurs k = alleKurse.get(x);// Um code zu kürzen und verständlicher zu machen
+			Kurs k = alleKurse.get(x);
 
-			// Sortiert Kurse aus, die fehlerhaft erstellt wurden, duch z.B. falsche
-			// Blockeinheit
+			
 			if (k.getBlockUhrzeit() == null || k.getWochentagZahl() == 0) {
 
 				System.out.println(
@@ -370,10 +405,10 @@ public class Stundenplan {
 	}
 
 	public static void einKurseinsotrieren() {
-
+		//letzter hinzugefügter Kurse wird überprüft, ob er fehlerhaft erstellt wurden. Dann wird überprüft, ob die Blockeinheit bereits belegt ist, falls einer der beiden Fälle eintritt wird der Kurs aus der ArrayList entfernt. Andernfalls wird der Kurs in seine entsprechende ArrayList eingefügt. Diese Methode wird nach jedem neuerstelten Kurs ausgeführt und überprüft lediglich einen (den letzten) Kurse.
 		int x = alleKurse.size() - 1;
 
-		Kurs neuerKurs = alleKurse.get(x);// Um code zu kürzen und verständlicher zu machen
+		Kurs neuerKurs = alleKurse.get(x);
 		if (neuerKurs.getBlockUhrzeit() == null || neuerKurs.getWochentagZahl() == 0) {
 			alleKurse.remove(x);
 			System.out.println("Der Kurs " + neuerKurs.getKursname()
@@ -421,7 +456,7 @@ public class Stundenplan {
 
 				break;
 			default:
-				System.out.println("2");
+				//gibts nicht
 				break;
 			}
 
@@ -432,7 +467,13 @@ public class Stundenplan {
 	/* Kurse */
 	public static void kursAusgeben(ArrayList<Kurs> k) {
 		for (Kurs kurs : k) {
-			System.out.println(kurs.toStringfuerKonsole());
+			System.out.println(kurs.toStringforKonsole());
+			if (kurs.isOnline()) {
+				System.out.println("Kurs findet online statt");
+			} else {
+				System.out.println("Raum: " + kurs.getRaumnummer());
+			}
+			System.out.println("\n");
 
 		}
 	}
@@ -502,13 +543,6 @@ public class Stundenplan {
 
 						}
 					}
-
-//					for (int i2 = 0; i2 < alleKurse.size(); i2++) {
-//						if (alleKurse.get(i2).getKursname().equals(eingabe1)) {
-//							System.out.println("Der Nächste '" + alleKurse.get(i2).getKursname() + "'-Kurs findet um "
-//									+ alleKurse.get(i2).getBlockUhrzeit() + " am " + alleKurse.get(i2).getWochentag()
-//									+ " statt.");
-//							
 
 				}
 
@@ -604,8 +638,17 @@ public class Stundenplan {
 			// break; ssssrrrrryyy
 		}
 
-		System.out.println("Online?");
+		System.out.println("Ist der Kurs online?");
 		boolean online = inInt.nextBoolean();
+
+		int raumnummer = 000;
+
+		if (online == false) {
+			System.out.println("In welchem Raum ist der Kurs?");
+			raumnummer = inInt.nextInt();
+		} else {
+			raumnummer = 000;
+		}
 
 		System.out.println("Welcher Professor hält den Kurs?\n");
 
@@ -622,12 +665,11 @@ public class Stundenplan {
 		if (profID == 0) {
 			professorErstellen();
 
-			System.out.println("Welcher Professor hält den Kurs?\n");
-
 			for (Professor prof : alleProfessoren) {
 				System.out.println(prof.toStringsimple());
 
 			}
+			System.out.println("Welcher Professor hält den Kurs?\n");
 			profID = inInt.nextInt();
 		}
 
@@ -642,22 +684,23 @@ public class Stundenplan {
 					if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3") || wochentag.equals("4")
 							|| wochentag.equals("5") || wochentag.equals("6")) {
 						int wochentagZahl = Integer.parseInt(wochentag);
-						alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentagZahl, online, profID));
+						alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentagZahl, online, raumnummer, profID));
 
 					} else {
-						alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentag, online, profID));
+						alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentag, online, raumnummer, profID));
 					}
 				} else {
 					if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3") || wochentag.equals("4")
 							|| wochentag.equals("5") || wochentag.equals("6")) {
 						int wochentagZahl = Integer.parseInt(wochentag);
-						alleKurse.add(new Kurs(kursName, uhrzeit, wochentagZahl, online, profID));
+						alleKurse.add(new Kurs(kursName, uhrzeit, wochentagZahl, online, raumnummer, profID));
 					} else {
-						alleKurse.add(new Kurs(kursName, uhrzeit, wochentag, online, profID));
+						alleKurse.add(new Kurs(kursName, uhrzeit, wochentag, online, raumnummer, profID));
 					}
 				}
 				erstellt = true;
 			}
+			einKurseinsotrieren();
 
 		}
 
@@ -714,7 +757,7 @@ public class Stundenplan {
 				for (Kurs k : alleKurse) {
 
 					if (eingabe1.equals(k.getKursname())) {
-						System.out.print(k.toStringfuerKonsole());
+						System.out.print(k.toStringforKonsole());
 					}
 				}
 
@@ -750,7 +793,7 @@ public class Stundenplan {
 		case "2":
 
 			for (Kurs k : alleKurse) {
-				System.out.print(k.toStringfuerKonsole());
+				System.out.print(k.toString()+" "+k.getKursId());
 			}
 			System.out.println("Welche Kurs-ID hat der Kurs den du löschen möchtest?");
 

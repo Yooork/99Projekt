@@ -1,6 +1,6 @@
 
 public class Kurs {
-	private static int zaehler = 1;
+public static int zaehler = 1;
 	private String kursname;
 	private Integer blockeinheit;
 	private String blockUhrzeit;
@@ -9,16 +9,16 @@ public class Kurs {
 	private boolean online;
 	private int profId;
 	private int kursId;
+	private int raumnummer;
 
-	public int getKursId() {
-		return kursId;
-	}
-
-	public Kurs(String kursname, int blockeinheit, String wochentag, boolean online, int professorId) {
+	public Kurs(String kursname, int blockeinheit, String wochentag, boolean online, int raumnummer, int professorId) {
 		this.kursname = kursname;
 		this.blockeinheit = blockeinheit;
 		this.wochentag = wochentag;
 		this.online = online;
+		if (online = false) {
+			this.raumnummer = raumnummer;
+		}
 		profId = professorId;
 		kursId = zaehler++;
 
@@ -39,11 +39,14 @@ public class Kurs {
 		return profId;
 	}
 
-	public Kurs(String kursname, int blockeinheit, int wochentagZahl, boolean online, int professorId) {
+	public Kurs(String kursname, int blockeinheit, int wochentagZahl, boolean online, int raumnummer, int professorId) {
 		this.kursname = kursname;
 		this.blockeinheit = blockeinheit;
 		this.wochentagZahl = wochentagZahl;
 		this.online = online;
+		if (online = false) {
+			this.raumnummer = raumnummer;
+		}
 		profId = professorId;
 		kursId = zaehler++;
 
@@ -60,11 +63,15 @@ public class Kurs {
 
 	}
 
-	public Kurs(String kursname, String blockUhrzeit, String wochentag, boolean online, int professorId) {
+	public Kurs(String kursname, String blockUhrzeit, String wochentag, boolean online, int raumnummer,
+			int professorId) {
 		this.kursname = kursname;
 		this.blockUhrzeit = blockUhrzeit;
 		this.wochentag = wochentag;
 		this.online = online;
+		if (online = false) {
+			this.raumnummer = raumnummer;
+		}
 		profId = professorId;
 		kursId = zaehler++;
 
@@ -81,12 +88,16 @@ public class Kurs {
 
 	}
 
-	public Kurs(String kursname, String blockUhrzeit, int wochentagZahl, boolean online, int professorId) {
+	public Kurs(String kursname, String blockUhrzeit, int wochentagZahl, boolean online, int raumnummer,
+			int professorId) {
 		this.kursname = kursname;
 		this.blockUhrzeit = blockUhrzeit;
 		this.wochentagZahl = wochentagZahl;
 		this.online = online;
 		profId = professorId;
+		if (online = false) {
+			this.raumnummer = raumnummer;
+		}
 		kursId = zaehler++;
 
 		try {
@@ -102,37 +113,23 @@ public class Kurs {
 
 	}
 
-	public String getKursname() {
-		return kursname;
-	}
-
-	public Integer getBlockeinheit() {
-		return blockeinheit;
-	}
-
-	public int getWochentagZahl() {
-		return wochentagZahl;
-	}
-
-	public void setBlockeinheit(int blockeinheit) {
-		this.blockeinheit = blockeinheit;
-	}
-
+	/* toString */
 	@Override
 	public String toString() {
 		return kursname + "\n" + blockUhrzeit + "\nIst der Kurs per Zoom?: " + online + "\nProfessor-ID: " + profId
 				+ "\n\n";
 	}
 
-	public String toStringfuerKonsole() {
-		return "Kurs: " + kursname + "\n Wann: " + wochentag + " um " + blockUhrzeit + "\nOnline? " + online
-				+ "\nKurs-ID: " + kursId + "\nProfessor-ID: " + profId + "\n\n";
+	public String toStringforKonsole() {
+		return "Kurs: " + kursname + "\nWann: " + wochentag + " um " + blockUhrzeit + "\nKurs-ID: " + kursId
+				+ "\nProfessor-ID: " + profId;
 	}
 
-	public String toStringtoTxt() {
-		return kursname + ";" + blockeinheit + ";" + wochentagZahl + ";" + online + ";" + profId;
+	public String toStringforbackup() {
+		return kursname + ";" + blockeinheit + ";" + wochentagZahl + ";" + online + ";" + raumnummer + ";" + profId;
 	}
 
+	/* Methoden zum Umrechnen */
 	private String blockeinheitInBlockUhrzeit(int blockeinheit) throws ExceptionUhrzeit {
 		if (blockeinheit <= 6 && blockeinheit > 0) {
 			switch (blockeinheit) {
@@ -209,18 +206,6 @@ public class Kurs {
 		return wochentag;
 	}
 
-	public String getBlockUhrzeit() {
-		return blockUhrzeit;
-	}
-
-	public String getWochentag() {
-		return wochentag;
-	}
-
-	public boolean isOnline() {
-		return online;
-	}
-
 	private int WochentagInwochentagZahl(String wochentag) throws ExecptionTag {
 		switch (wochentag) {
 		case "Montag":
@@ -282,4 +267,38 @@ public class Kurs {
 		return blockeinheit;
 
 	}
+
+	/* Getter */
+	public int getRaumnummer() {
+		return raumnummer;
+	}
+
+	public int getWochentagZahl() {
+		return wochentagZahl;
+	}
+
+	public int getKursId() {
+		return kursId;
+	}
+
+	public boolean isOnline() {
+		return online;
+	}
+
+	public String getBlockUhrzeit() {
+		return blockUhrzeit;
+	}
+
+	public String getWochentag() {
+		return wochentag;
+	}
+
+	public String getKursname() {
+		return kursname;
+	}
+
+	public Integer getBlockeinheit() {
+		return blockeinheit;
+	}
+
 }
