@@ -1,25 +1,24 @@
 
 public class Kurs {
-public static int zaehler = 1;
+	public static int zaehler = 1;
 	private String kursname;
 	private Integer blockeinheit;
 	private String blockUhrzeit;
 	private String wochentag;
 	private int wochentagZahl;
 	private boolean online;
-	private int profId;
+	private int pID;
 	private int kursId;
-	private int raumnummer;
+	private String ort;
 
-	public Kurs(String kursname, int blockeinheit, String wochentag, boolean online, int raumnummer, int professorId) {
+	public Kurs(String kursname, int blockeinheit, String wochentag, boolean online, String ort, int pID) {
 		this.kursname = kursname;
 		this.blockeinheit = blockeinheit;
 		this.wochentag = wochentag;
 		this.online = online;
-		if (online = false) {
-			this.raumnummer = raumnummer;
-		}
-		profId = professorId;
+		this.ort = ort;
+
+		this.pID = pID;
 		kursId = zaehler++;
 
 		try {
@@ -35,19 +34,15 @@ public static int zaehler = 1;
 
 	}
 
-	public int getProfId() {
-		return profId;
-	}
-
-	public Kurs(String kursname, int blockeinheit, int wochentagZahl, boolean online, int raumnummer, int professorId) {
+	public Kurs(String kursname, int blockeinheit, int wochentagZahl, boolean online, String ort, int pID) {
 		this.kursname = kursname;
 		this.blockeinheit = blockeinheit;
 		this.wochentagZahl = wochentagZahl;
 		this.online = online;
-		if (online = false) {
-			this.raumnummer = raumnummer;
-		}
-		profId = professorId;
+
+		this.ort = ort;
+
+		this.pID = pID;
 		kursId = zaehler++;
 
 		try {
@@ -63,16 +58,15 @@ public static int zaehler = 1;
 
 	}
 
-	public Kurs(String kursname, String blockUhrzeit, String wochentag, boolean online, int raumnummer,
-			int professorId) {
+	public Kurs(String kursname, String blockUhrzeit, String wochentag, boolean online, String ort, int pID) {
 		this.kursname = kursname;
 		this.blockUhrzeit = blockUhrzeit;
 		this.wochentag = wochentag;
 		this.online = online;
-		if (online = false) {
-			this.raumnummer = raumnummer;
-		}
-		profId = professorId;
+
+		this.ort = ort;
+
+		this.pID = pID;
 		kursId = zaehler++;
 
 		try {
@@ -88,16 +82,14 @@ public static int zaehler = 1;
 
 	}
 
-	public Kurs(String kursname, String blockUhrzeit, int wochentagZahl, boolean online, int raumnummer,
-			int professorId) {
+	public Kurs(String kursname, String blockUhrzeit, int wochentagZahl, boolean online, String ort, int pID) {
 		this.kursname = kursname;
 		this.blockUhrzeit = blockUhrzeit;
 		this.wochentagZahl = wochentagZahl;
 		this.online = online;
-		profId = professorId;
-		if (online = false) {
-			this.raumnummer = raumnummer;
-		}
+		this.pID = pID;
+		this.ort = ort;
+
 		kursId = zaehler++;
 
 		try {
@@ -116,17 +108,29 @@ public static int zaehler = 1;
 	/* toString */
 	@Override
 	public String toString() {
-		return kursname + "\n" + blockUhrzeit + "\nIst der Kurs per Zoom?: " + online + "\nProfessor-ID: " + profId
-				+ "\n\n";
+		if (online == true) {
+			return kursname + "\n" + blockUhrzeit + "\nOnline ➞ " + ort + "\nKurs-ID: " + kursId + "\nProfessor-ID: "
+					+ pID + "\n\n";
+		} else {
+			return "Kurs: " + kursname + "\n" + blockUhrzeit + "\nOnline: " + online + "\nRaum: " + ort + "\nGebäude: "
+					+ ort.charAt(0) + "\nKurs-ID: " + kursId + "\nProfessor-ID: " + pID + "\n\n";
+		}
 	}
 
 	public String toStringforKonsole() {
-		return "Kurs: " + kursname + "\nWann: " + wochentag + " um " + blockUhrzeit + "\nKurs-ID: " + kursId
-				+ "\nProfessor-ID: " + profId;
+		if (online == true) {
+			return "Kurs: " + kursname + "\nWann: " + wochentag + " um " + blockUhrzeit + "\nKurs-ID: " + kursId
+					+ "\nProfessor-ID: " + pID + "\nOnline: " + online + "\nPlattform: " + ort;
+		} else {
+			return "Kurs: " + kursname + "\nWann: " + wochentag + " um " + blockUhrzeit + "\nKurs-ID: " + kursId
+					+ "\nProfessor-ID: " + pID + "\nOnline: " + online + "\nRaum: " + ort + "\nGebäude: "
+					+ ort.charAt(0);
+		}
+
 	}
 
 	public String toStringforbackup() {
-		return kursname + ";" + blockeinheit + ";" + wochentagZahl + ";" + online + ";" + raumnummer + ";" + profId;
+		return kursname + ";" + blockeinheit + ";" + wochentagZahl + ";" + online + ";" + ort + ";" + pID;
 	}
 
 	/* Methoden zum Umrechnen */
@@ -269,8 +273,8 @@ public static int zaehler = 1;
 	}
 
 	/* Getter */
-	public int getRaumnummer() {
-		return raumnummer;
+	public String getRaumnummer() {
+		return ort;
 	}
 
 	public int getWochentagZahl() {
@@ -299,6 +303,10 @@ public static int zaehler = 1;
 
 	public Integer getBlockeinheit() {
 		return blockeinheit;
+	}
+
+	public int getPID() {
+		return pID;
 	}
 
 }
