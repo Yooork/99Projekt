@@ -112,8 +112,15 @@ public class Kurs {
 			return kursname + "\n" + blockUhrzeit + "\nOnline ➞ " + ort + "\nKurs-ID: " + kursId + "\nProfessor-ID: "
 					+ pID + "\n\n";
 		} else {
-			return "Kurs: " + kursname + "\n" + blockUhrzeit + "\nOnline: " + online + "\nRaum: " + ort + "\nGebäude: "
-					+ ort.charAt(0) + "\nKurs-ID: " + kursId + "\nProfessor-ID: " + pID + "\n\n";
+			if(ort.contains("/")) {
+				String[] gebaudeUndRaum = ort.split("/");
+				return "Kurs: " + kursname + "\n" + blockUhrzeit + "\nOnline: " + online + "\nRaum: " + gebaudeUndRaum[0] + "\nGebäude: "
+						+ gebaudeUndRaum[1] + "\nKurs-ID: " + kursId + "\nProfessor-ID: " + pID + "\n\n";
+			}
+			else {
+				return "Kurs: " + kursname + "\n" + blockUhrzeit + "\nOnline: " + online + "\nOrt: " + ort + "\nKurs-ID: " + kursId + "\nProfessor-ID: " + pID + "\n\n";
+			}
+			
 		}
 	}
 
