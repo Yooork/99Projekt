@@ -1,6 +1,6 @@
 
 public class Kurs {
-	public static int zaehler = 1;
+	private static int zaehler = 1;
 	private String kursname;
 	private Integer blockeinheit;
 	private String blockUhrzeit;
@@ -27,7 +27,7 @@ public class Kurs {
 			e.printStackTrace();
 		}
 		try {
-			wochentagZahl = WochentagInwochentagZahl(wochentag);
+			wochentagZahl = wochentagInwochentagZahl(wochentag);
 		} catch (ExecptionTag e) {
 			e.printStackTrace();
 		}
@@ -70,7 +70,7 @@ public class Kurs {
 		kursId = zaehler++;
 
 		try {
-			wochentagZahl = WochentagInwochentagZahl(wochentag);
+			wochentagZahl = wochentagInwochentagZahl(wochentag);
 		} catch (ExecptionTag e) {
 			e.printStackTrace();
 		}
@@ -224,7 +224,7 @@ public class Kurs {
 		return wochentag;
 	}
 
-	private int WochentagInwochentagZahl(String wochentag) throws ExecptionTag {
+	private int wochentagInwochentagZahl(String wochentag) throws ExecptionTag {
 		switch (wochentag) {
 		case "Montag":
 			wochentagZahl = 1;
