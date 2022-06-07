@@ -80,6 +80,8 @@ public class Stundenplan {
 
 			String eingabeSwitch = eingabesc.nextLine();
 
+			System.out.println("");
+
 			switch (eingabeSwitch) {
 			case "1":// alle Kurse ausgaben
 				System.out.println();
@@ -152,11 +154,11 @@ public class Stundenplan {
 	public static void professorenInDateiausgeben() {
 		// Professoren werden mit einer for-each-Schleife in einer Textdatei, auf dem
 		// Desktop abgespeichert, um sie nach einem Programm-Stopp zubehalten
-		try (BufferedWriter dateiSchreiber = new BufferedWriter(
-				new FileWriter(new File("/Users/york/Desktop/alleProfessoren.txt"), false))) {
+		try (BufferedWriter dateiSchreiber = new BufferedWriter(new FileWriter(
+				new File("/Users/" + System.getProperty("user.name") + "/Desktop/alleProfessoren.txt"), false))) {
 
 			for (Professor p : alleProfessoren) {
-				dateiSchreiber.write(p.toStringtoTxt() + "\n");
+				dateiSchreiber.write(p.toStringforBackup() + "\n");
 			}
 
 		} catch (IOException e) {
@@ -166,9 +168,9 @@ public class Stundenplan {
 	}
 
 	public static void professorenVonDateieinlesen() {
-//		 Professoren werden von einer Datei eingelesen, die auf dem Desktop liegt. Diese Datei wurde von der Methode 'professorenInDateiausgeben()' erstellt.
-		try (BufferedReader dateiLeser = new BufferedReader(
-				new FileReader(new File("/Users/york/Desktop/alleProfessoren.txt")))) {
+		//Professoren werden von einer Datei eingelesen, die auf dem Desktop liegt. Diese Datei wurde von der Methode 'professorenInDateiausgeben()' erstellt.
+		try (BufferedReader dateiLeser = new BufferedReader(new FileReader(
+				new File("/Users/" + System.getProperty("user.name") + "/Desktop/alleProfessoren.txt")))) {
 			String zeile;
 
 			String[] z;
@@ -198,8 +200,8 @@ public class Stundenplan {
 		// Kurse werden mit einer for-each-Schleife in einer Textdatei, auf dem Desktop
 		// abgespeichert, um sie nach einem Programm-Stopp zubehalten
 
-		try (BufferedWriter dateiSchreiber = new BufferedWriter(
-				new FileWriter(new File("/Users/york/Desktop/alleKurse.txt"), false))) {
+		try (BufferedWriter dateiSchreiber = new BufferedWriter(new FileWriter(
+				new File("/Users/" + System.getProperty("user.name") + "/Desktop/alleKurse.txt"), false))) {
 
 			for (int i = 0; i < wochentage.size(); i++) {
 				for (int z = 0; z < wochentage.get(i).size(); z++) {
@@ -215,9 +217,9 @@ public class Stundenplan {
 	}
 
 	public static void kurseVonDateieinlesen() {
-//		 Kurse werden von einer Datei eingelesen, die auf dem Desktop liegt. Diese Datei wurde von der Methode 'professorenInDateiausgeben()' erstellt.
+		//Kurse werden von einer Datei eingelesen, die auf dem Desktop liegt. Diese Datei wurde von der Methode 'professorenInDateiausgeben()' erstellt.
 		try (BufferedReader dateiLeser = new BufferedReader(
-				new FileReader(new File("/Users/york/Desktop/alleKurse.txt")))) {
+				new FileReader(new File("/Users/" + System.getProperty("user.name") + "/Desktop/alleKurse.txt")))) {
 			String zeile;
 
 			String[] z;
@@ -227,9 +229,9 @@ public class Stundenplan {
 				z = zeile.split(";");
 
 				boolean kursnameexistiert = false;
-				for (Kurs i : alleKurse) {
+				for (Kurs k : alleKurse) {
 
-					if (z[0].equals(i.getKursname())) {
+					if (z[0].equals(k.getKursname())) {
 						kursnameexistiert = true;
 					}
 				}
@@ -247,7 +249,7 @@ public class Stundenplan {
 	public static void dateiAusgeben() {
 		// Kurse werden mit 2 for-Schleifen in einer Datei ausgegeben. Die erste
 		// for-Schleife gibt den Wochentag an, die zweite gibt den Kurs an. Hier
-		// arbeiten wir mit der Methode 'get()' um den Index herauszufinfen, falls ein
+		// arbeiten wir mit der Methode 'get()' um den Index herauszufinden, falls ein
 		// Wochentag, keine Kurse besitz wird dies in der Datei entsprechend
 		// gekennzeichnet
 		Scanner inString = new Scanner(System.in);
@@ -255,8 +257,8 @@ public class Stundenplan {
 		System.out.println("Welcher Dateiname soll der Stundenplan haben?");
 		String dateiname = inString.nextLine();
 
-		try (BufferedWriter dateiSchreiber = new BufferedWriter(
-				new FileWriter(new File("/Users/york/Desktop/" + dateiname + ".txt"), false))) {
+		try (BufferedWriter dateiSchreiber = new BufferedWriter(new FileWriter(
+				new File("/Users/" + System.getProperty("user.name") + "/Desktop/" + dateiname + ".txt"), false))) {
 
 			boolean ausgabe = false;
 
@@ -303,11 +305,19 @@ public class Stundenplan {
 	}
 
 	public static void endeVonSwitchCase() {
-		Scanner eingabesc2 = new Scanner(System.in);
-		System.out.println("\nUm das Programm zu beenden 'q' eingeben, andernfalls andere Eingabe tätigen");
-		String eingabeSwitch = eingabesc2.nextLine();
+		//Wird ausgeführt, damit dem User die Entscheidung geben wird nach der Ausgabe das Programm zubeenden oder eine kleine Pause eingelegt wird bis es wieder ins Hauptmenü geht.
+		Scanner inString = new Scanner(System.in);
 
-		if (eingabeSwitch.equals("q")) {
+		System.out.println("┌────────────────────────────────────────┐");
+		System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+		System.out.println("│q ➞ Programm beenden                    │");
+		System.out.println("│andere Taste ➞ Programm fortsetzen      │");
+		System.out.println("└────────────────────────────────────────┘");
+		System.out.print("Ihre Eingabe ➞ ");
+
+		String eingabe1 = inString.nextLine();
+
+		if (eingabe1.equals("q")) {
 			System.exit(0);
 		}
 
@@ -375,83 +385,15 @@ public class Stundenplan {
 				samstag.add(k);
 
 				break;
-			default:
-				// gibts nicht
-				break;
 
 			}
-
 		}
 		alleKurse.clear();
 	}
 
-	public static void einKurseinsotrieren() {
-		// letzter hinzugefügter Kurse wird überprüft, ob er fehlerhaft erstellt wurden.
-		// Dann wird überprüft, ob die Blockeinheit bereits belegt ist, falls einer der
-		// beiden Fälle eintritt wird der Kurs aus der ArrayList entfernt. Andernfalls
-		// wird der Kurs in seine entsprechende ArrayList eingefügt. Diese Methode wird
-		// nach jedem neuerstelten Kurs ausgeführt und überprüft lediglich einen (den
-		// letzten) Kurse.
-		int x = alleKurse.size() - 1;
-
-		Kurs neuerKurs = alleKurse.get(x);
-		if (neuerKurs.getBlockUhrzeit() == null || neuerKurs.getWochentagZahl() == 0) {
-			alleKurse.remove(x);
-			System.out.println("Der Kurs " + neuerKurs.getKursname()
-					+ " ist fehlerhaft und wird nicht zum Stundenplan hinzugefügt");
-		}
-
-		int i = 0;
-		for (Kurs k : alleKurse) {
-
-			if (k.getBlockeinheit() == neuerKurs.getBlockeinheit()
-					&& k.getWochentagZahl() == neuerKurs.getWochentagZahl()) {
-				i++;
-
-			}
-		}
-
-		if (i > 1) {
-			System.out.println("Der Kurs " + neuerKurs.getKursname() + " wurde nicht erstellt, da "
-					+ neuerKurs.getWochentag() + " um " + neuerKurs.getBlockUhrzeit() + " bereits belegt ist.");
-			alleKurse.remove(neuerKurs);
-		} else {
-			switch (neuerKurs.getWochentagZahl()) {
-			case 1:
-				montag.add(neuerKurs);
-
-				break;
-			case 2:
-				dienstag.add(neuerKurs);
-
-				break;
-			case 3:
-				mittwoch.add(neuerKurs);
-
-				break;
-			case 4:
-				donnerstag.add(neuerKurs);
-
-				break;
-			case 5:
-				freitag.add(neuerKurs);
-
-				break;
-			case 6:
-				samstag.add(neuerKurs);
-
-				break;
-			default:
-				// gibts nicht
-				break;
-			}
-
-		}
-
-	}
-
 	/* Kurse */
 	public static void kursAusgeben(ArrayList<Kurs> k) {
+		// Methode zum ausgeben von einer 'ArrayList<Kurs>'
 		for (Kurs kurs : k) {
 			System.out.println(kurs.toStringforKonsole() + "\n");
 
@@ -464,13 +406,13 @@ public class Stundenplan {
 		int x = 0;
 
 		System.out.println("Welcher Kurs soll gesucht werden? (Kursname)");
-		String eingabe1 = inString.nextLine();
+		String kursname = inString.nextLine();
 
 		for (int i = 0; i < wochentage.size(); i++) {
 			for (int z = 0; z < wochentage.get(i).size(); z++) {
 				Kurs k = wochentage.get(i).get(z);
 
-				if (k.getKursname().equals(eingabe1)) {
+				if (k.getKursname().equals(kursname)) {
 					x++;
 				}
 			}
@@ -478,8 +420,12 @@ public class Stundenplan {
 
 		if (x > 1) {
 
-			System.out
-					.println("Gebe 1 ein um den nächsten Termin anzuzeigen oder eine andere Taste um alle auszugeben");
+			System.out.println("┌────────────────────────────────────────┐");
+			System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+			System.out.println("│1 ➞ nächsten Termin ausgeben            │");
+			System.out.println("│andere Taste ➞ alle Termine ausgeben    │");
+			System.out.println("└────────────────────────────────────────┘");
+			System.out.print("Ihre Eingabe ➞ ");
 
 			String eingabe2 = inString.nextLine();
 
@@ -500,7 +446,7 @@ public class Stundenplan {
 					if (gefunden == false) {
 						for (int z = 0; z < wochentage.get(i).size(); z++) {
 
-							if (wochentage.get(i).get(z).getKursname().equals(eingabe1)
+							if (wochentage.get(i).get(z).getKursname().equals(kursname)
 									&& wochentage.get(i).get(z).getWochentagZahl() >= tag) {
 								System.out.println("Der Nächste '" + wochentage.get(i).get(z).getKursname()
 										+ "'-Kurs findet um " + wochentage.get(i).get(z).getBlockUhrzeit() + " am "
@@ -517,7 +463,7 @@ public class Stundenplan {
 					for (int i = 0; i < wochentage.size(); i++) {
 						if (gefunden == false) {
 							for (int z = 0; z < wochentage.get(i).size(); z++) {
-								if (wochentage.get(i).get(z).getKursname().equals(eingabe1)) {
+								if (wochentage.get(i).get(z).getKursname().equals(kursname)) {
 									System.out.println("Der Nächste '" + wochentage.get(i).get(z).getKursname()
 											+ "'-Kurs findet um " + wochentage.get(i).get(z).getBlockUhrzeit() + " am "
 											+ wochentage.get(i).get(z).getWochentag() + " statt.");
@@ -537,7 +483,7 @@ public class Stundenplan {
 					for (int z = 0; z < wochentage.get(i).size(); z++) {
 						Kurs k = wochentage.get(i).get(z);
 
-						if (k.getKursname().equals(eingabe1)) {
+						if (k.getKursname().equals(kursname)) {
 							System.out.println(k.toStringforKonsole() + "\n");
 						}
 					}
@@ -552,7 +498,7 @@ public class Stundenplan {
 				for (int z = 0; z < wochentage.get(i).size(); z++) {
 					Kurs k = wochentage.get(i).get(z);
 
-					if (k.getKursname().equals(eingabe1)) {
+					if (k.getKursname().equals(kursname)) {
 						System.out.println("Der Kurs " + k.getKursname() + " findet um " + k.getBlockUhrzeit() + " am "
 								+ k.getWochentag() + " statt.");
 
@@ -562,7 +508,7 @@ public class Stundenplan {
 			}
 		}
 		if (x == 0) {
-			System.out.println("Den Kurs '" + eingabe1 + "' gibt es nicht!");
+			System.out.println("Den Kurs '" + kursname + "' gibt es nicht!");
 		}
 	}
 
@@ -570,14 +516,14 @@ public class Stundenplan {
 		Scanner inString = new Scanner(System.in);
 		Scanner inInt = new Scanner(System.in);
 
-		System.out.println("Kursname");
+		System.out.println("Geben Sie den Kursname ein, den Sie erstellen wollen.");
 		String kursName = inString.nextLine();
 
 		int wiederholen = 0;
 		String uhrzeit;
 		while (true) { // Schleife falls die Uhrzeit falsch eingegeben wird, kann man die Uhrzeit
 						// nochmals neu eingeben
-			System.out.println("Welche Uhrzeit");
+			System.out.println("Geben Sie die Uhrzeit ein, wann der Kurs statt findet.");
 			uhrzeit = inString.nextLine();
 			if (uhrzeit.equals("1") || uhrzeit.equals("2") || uhrzeit.equals("3") || uhrzeit.equals("4")
 					|| uhrzeit.equals("5") || uhrzeit.equals("6") || uhrzeit.equals("8:00 Uhr - 9:30 Uhr")
@@ -587,7 +533,13 @@ public class Stundenplan {
 				break;
 			} else {
 				System.out.println(uhrzeit + " ist keine richtige Angabe");
-				System.out.println("Um den Vorhergang zubeenden '1' eingeben andernfalls andere Eingabe tätigen");
+
+				System.out.println("┌────────────────────────────────────────┐");
+				System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+				System.out.println("│1 ➞ Vorhergang beenden                  │");
+				System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
+				System.out.println("└────────────────────────────────────────┘");
+				System.out.print("Ihre Eingabe ➞ ");
 				String uhrzeitWied = inString.nextLine();
 				switch (uhrzeitWied) {
 				case "1":
@@ -608,7 +560,7 @@ public class Stundenplan {
 		String wochentag;
 		while (true) { // Schleife falls der Wochentag falsch eingegeben wird, kann man den Wochentag
 						// nochmals neu eingeben
-			System.out.println("Welcher Wochentag");
+			System.out.println("An welchem Wochentag ist der Kurs?");
 			wochentag = inString.nextLine();
 			if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3") || wochentag.equals("4")
 					|| wochentag.equals("5") || wochentag.equals("6") || wochentag.equals("Montag")
@@ -617,7 +569,12 @@ public class Stundenplan {
 				break;
 			} else {
 				System.out.println(wochentag + " ist kein Wochentag");
-				System.out.println("Um den Vorhergang zubeenden '1' eingeben andernfalls andere Eingabe tätigen");
+				System.out.println("┌────────────────────────────────────────┐");
+				System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+				System.out.println("│1 ➞ Vorhergang beenden                  │");
+				System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
+				System.out.println("└────────────────────────────────────────┘");
+				System.out.print("Ihre Eingabe ➞ ");
 				String wochentagWied = inString.nextLine();
 				switch (wochentagWied) {
 				case "1":
@@ -643,7 +600,7 @@ public class Stundenplan {
 		String ort;
 
 		if (online == false) {
-			System.out.println("In welchem Raum ist der Kurs?");
+			System.out.println("In welchem Raum findet der Kurs statt?");
 			ort = inString.nextLine();
 		} else {// While schleife eifügen bis dieses Format eingeben wird Gebäude/Raumnummer -
 				// z.B.: 1/111
@@ -651,15 +608,19 @@ public class Stundenplan {
 			ort = inString.nextLine();
 		}
 
-		System.out.println("Welcher Professor hält den Kurs?\n");
-
 		for (Professor prof : alleProfessoren) {
 			System.out.println(prof.toStringsimple());
 
 		}
 
-		System.out.println(
-				"Geben Sie die richtige Professor-ID ein die Sie für den Kurs einteilen möchten oder geben Sie '0' ein um einen Professor zu erstellen: ");
+		System.out.println("");
+
+		System.out.println("┌────────────────────────────────────────┐");
+		System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+		System.out.println("│0 ➞ Professor erstellen                 │");
+		System.out.println("│Professor-ID ➞ Professor einteilen      │");
+		System.out.println("└────────────────────────────────────────┘");
+		System.out.print("Ihre Eingabe ➞ ");
 
 		int profID = inInt.nextInt();
 
@@ -685,7 +646,6 @@ public class Stundenplan {
 					if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3") || wochentag.equals("4")
 							|| wochentag.equals("5") || wochentag.equals("6")) {
 						int wochentagZahl = Integer.parseInt(wochentag);
-//						wochentage.get(wochentagZahl).add(new Kurs(kursName, uhrzeitZahl, wochentagZahl, online, ort, profID));
 						alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentagZahl, online, ort, profID));
 
 					} else {
@@ -720,16 +680,20 @@ public class Stundenplan {
 		Scanner inInt = new Scanner(System.in);
 
 		System.out.println("Anhand welcher Eigenschaft soll ein Kurs gelöscht werden?");
-		System.out.println("1 ➞ Name");
-		System.out.println("2 ➞ Kurs-ID");
-		System.out.println("andere Taste ➞ abbrechen");
+		System.out.println("┌────────────────────────────────────────┐");
+		System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+		System.out.println("│1 ➞ Name                                │");
+		System.out.println("│2 ➞ Kurs-ID                             │");
+		System.out.println("│andere Taste ➞ abbrechen                │");
+		System.out.println("└────────────────────────────────────────┘");
+		System.out.print("Ihre Eingabe ➞ ");
 
 		String eingabe1 = inString.nextLine();
 
 		switch (eingabe1) {
 
 		case "1":
-			System.out.println("Welcher Kurs soll gelöscht werden");
+			System.out.println("Welcher Kurs soll gelöscht werden (Kursname)");
 			eingabe1 = inString.nextLine();
 
 			int p = 0;
@@ -883,9 +847,14 @@ public class Stundenplan {
 		int pIDgeloescht = 0;
 
 		System.out.println("Anhand welcher Eigenschaft soll der Professor gelöscht werden?");
-		System.out.println("1 ➞ Name");
-		System.out.println("2 ➞ Professor-ID");
-		System.out.println("andere Taste ➞ abbrechen");
+
+		System.out.println("┌────────────────────────────────────────┐");
+		System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+		System.out.println("│1 ➞ Name                                │");
+		System.out.println("│2 ➞ Professor-ID                        │");
+		System.out.println("│andere Taste ➞ abbrechen                │");
+		System.out.println("└────────────────────────────────────────┘");
+		System.out.print("Ihre Eingabe ➞ ");
 
 		String eingabe1 = inString.nextLine();
 
@@ -983,7 +952,13 @@ public class Stundenplan {
 		if (gefundeneKurse > 0) {
 
 			System.out.println("Sollen auch die Kurse von dem Professor gelöscht werden?");
-			System.out.println("Drücke 1 für ja oder eine andere Taste für nein");
+			System.out.println("┌────────────────────────────────────────┐");
+			System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+			System.out.println("│1 ➞ ja                                  │");
+			System.out.println("│andere Taste ➞ nein                     │");
+			System.out.println("└────────────────────────────────────────┘");
+			System.out.print("Ihre Eingabe ➞ ");
+
 			String eingabe2 = inString.nextLine();
 
 			if (eingabe2.equals("1")) {
@@ -1010,9 +985,14 @@ public class Stundenplan {
 		Scanner inInt = new Scanner(System.in);
 
 		System.out.println("Anhand welcher Eigenschaft soll der Professor gesucht werden?");
-		System.out.println("1 ➞ Name");
-		System.out.println("2 ➞ Professor-ID");
-		System.out.println("andere Taste ➞ abbrechen");
+
+		System.out.println("┌────────────────────────────────────────┐");
+		System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+		System.out.println("│1 ➞ Name                                │");
+		System.out.println("│2 ➞ Professor-ID                        │");
+		System.out.println("│andere Taste ➞ abbrechen                │");
+		System.out.println("└────────────────────────────────────────┘");
+		System.out.print("Ihre Eingabe ➞ ");
 
 		String eingabe1 = inString.nextLine();
 

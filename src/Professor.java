@@ -22,7 +22,8 @@ public class Professor {
 		return vorname + "." + name + "@hft-stuttgart.de";
 	}
 
-	public String toStringtoTxt() {
+	/* toString */
+	public String toStringforBackup() {
 		return name + ";" + vorname + ";" + geschlecht + ";" + tel + ";" + eMail + ";" + profId;
 	}
 
@@ -36,6 +37,7 @@ public class Professor {
 				+ ", eMail=" + eMail + ", profId=" + profId + "]";
 	}
 
+	/* Getter */
 	public static int getZaehler() {
 		return zaehler;
 	}
