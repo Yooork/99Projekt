@@ -704,28 +704,28 @@ public class Stundenplan {
 			if (online == false) {
 				System.out.println("In welchem Raum findet der Kurs statt?");
 				ort = inString.nextLine();
-				while (true) {
-					if (ort.contains("/")) {
-						break;
-					} else {
-						System.out.println("Die Angabe war nicht richtig");
-						System.out.println("┌────────────────────────────────────────┐");
-						System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
-						System.out.println("│1 ➞ Vorhergang beenden                  │");
-						System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
-						System.out.println("└────────────────────────────────────────┘");
-						System.out.print("Ihre Eingabe ➞ ");
-						String onlineWied = inString.nextLine();
-						switch (onlineWied) {
-						case "1":
-							wiederholen = 1;
-							break;
-						default:
-							continue;
-						}
-
-					}
-				}
+//				while (true) {
+//					if (ort.contains("/")) {
+//						break;
+//					} else {
+//						System.out.println("Die Angabe war nicht richtig");
+//						System.out.println("┌────────────────────────────────────────┐");
+//						System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+//						System.out.println("│1 ➞ Vorhergang beenden                  │");
+//						System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
+//						System.out.println("└────────────────────────────────────────┘");
+//						System.out.print("Ihre Eingabe ➞ ");
+//						String onlineWied = inString.nextLine();
+//						switch (onlineWied) {
+//						case "1":
+//							wiederholen = 1;
+//							break;
+//						default:
+//							continue;
+//						}
+//
+//					}
+//				}
 				if (wiederholen == 1) {
 					break;
 				}
@@ -801,6 +801,7 @@ public class Stundenplan {
 			}
 
 			if (erstellt == true) {
+				System.out.println("Der Kurs mit dem Namen '"+alleKurse.get(0).getKursname()+"' wurde erstellt.");
 				einKurseinsotrieren();
 				sortBlockeinheit();
 			}

@@ -112,15 +112,16 @@ public class Kurs {
 			return kursname + "\n" + blockUhrzeit + "\nOnline ➞ " + ort + "\nKurs-ID: " + kursId + "\nProfessor-ID: "
 					+ pID + "\n\n";
 		} else {
-			if(ort.contains("/")) {
+			if (ort.contains("/")) {
 				String[] gebaudeUndRaum = ort.split("/");
-				return "Kurs: " + kursname + "\n" + blockUhrzeit + "\nOnline: " + online + "\nRaum: " + gebaudeUndRaum[0] + "\nGebäude: "
-						+ gebaudeUndRaum[1] + "\nKurs-ID: " + kursId + "\nProfessor-ID: " + pID + "\n\n";
+				return "Kurs: " + kursname + "\n" + blockUhrzeit + "\nOnline: " + online + "\nRaum: "
+						+ gebaudeUndRaum[0] + "\nGebäude: " + gebaudeUndRaum[1] + "\nKurs-ID: " + kursId
+						+ "\nProfessor-ID: " + pID + "\n\n";
+			} else {
+				return "Kurs: " + kursname + "\n" + blockUhrzeit + "\nOnline: " + online + "\nOrt: " + ort
+						+ "\nKurs-ID: " + kursId + "\nProfessor-ID: " + pID + "\n\n";
 			}
-			else {
-				return "Kurs: " + kursname + "\n" + blockUhrzeit + "\nOnline: " + online + "\nOrt: " + ort + "\nKurs-ID: " + kursId + "\nProfessor-ID: " + pID + "\n\n";
-			}
-			
+
 		}
 	}
 
@@ -129,9 +130,15 @@ public class Kurs {
 			return "Kurs: " + kursname + "\nWann: " + wochentag + " um " + blockUhrzeit + "\nKurs-ID: " + kursId
 					+ "\nProfessor-ID: " + pID + "\nOnline: " + online + "\nPlattform: " + ort;
 		} else {
-			return "Kurs: " + kursname + "\nWann: " + wochentag + " um " + blockUhrzeit + "\nKurs-ID: " + kursId
-					+ "\nProfessor-ID: " + pID + "\nOnline: " + online + "\nRaum: " + ort + "\nGebäude: "
-					+ ort.charAt(0);
+			if (ort.contains("/")) {
+				String[] gebaudeUndRaum = ort.split("/");
+				return "Kurs: " + kursname + "\nWann: " + wochentag + " um " + blockUhrzeit + "\nKurs-ID: " + kursId
+						+ "\nProfessor-ID: " + pID + "\nOnline: " + online + "\nRaum: " + gebaudeUndRaum[0]
+						+ "\nGebäude: " + gebaudeUndRaum[1];
+			} else {
+				return "Kurs: " + kursname + "\nWann: " + wochentag + " um " + blockUhrzeit + "\nKurs-ID: " + kursId
+						+ "\nProfessor-ID: " + pID + "\nOnline: " + online + "\nOrt: " + ort;
+			}
 		}
 
 	}
