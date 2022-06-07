@@ -99,7 +99,7 @@ public class Stundenplan {
 				break;
 			case "3":// Kurs Erstellen
 				kursErstellenSC();
-				endeVonSwitchCase();
+
 				break;
 
 			case "4": // Kurs löschen
@@ -168,7 +168,8 @@ public class Stundenplan {
 	}
 
 	public static void professorenVonDateieinlesen() {
-		//Professoren werden von einer Datei eingelesen, die auf dem Desktop liegt. Diese Datei wurde von der Methode 'professorenInDateiausgeben()' erstellt.
+		// Professoren werden von einer Datei eingelesen, die auf dem Desktop liegt.
+		// Diese Datei wurde von der Methode 'professorenInDateiausgeben()' erstellt.
 		try (BufferedReader dateiLeser = new BufferedReader(new FileReader(
 				new File("/Users/" + System.getProperty("user.name") + "/Desktop/alleProfessoren.txt")))) {
 			String zeile;
@@ -217,7 +218,8 @@ public class Stundenplan {
 	}
 
 	public static void kurseVonDateieinlesen() {
-		//Kurse werden von einer Datei eingelesen, die auf dem Desktop liegt. Diese Datei wurde von der Methode 'professorenInDateiausgeben()' erstellt.
+		// Kurse werden von einer Datei eingelesen, die auf dem Desktop liegt. Diese
+		// Datei wurde von der Methode 'professorenInDateiausgeben()' erstellt.
 		try (BufferedReader dateiLeser = new BufferedReader(
 				new FileReader(new File("/Users/" + System.getProperty("user.name") + "/Desktop/alleKurse.txt")))) {
 			String zeile;
@@ -305,7 +307,9 @@ public class Stundenplan {
 	}
 
 	public static void endeVonSwitchCase() {
-		//Wird ausgeführt, damit dem User die Entscheidung geben wird nach der Ausgabe das Programm zubeenden oder eine kleine Pause eingelegt wird bis es wieder ins Hauptmenü geht.
+		// Wird ausgeführt, damit dem User die Entscheidung geben wird nach der Ausgabe
+		// das Programm zubeenden oder eine kleine Pause eingelegt wird bis es wieder
+		// ins Hauptmenü geht.
 		Scanner inString = new Scanner(System.in);
 
 		System.out.println("┌────────────────────────────────────────┐");
@@ -328,8 +332,7 @@ public class Stundenplan {
 		// alle Kurse werden überprüft, ob sie fehlerhaft erstellt wurden. Dann
 		// überprüft, ob eine Blockeinheit doppelt belegt ist, falls einer der beiden
 		// Fälle eintritt wird der Kurs aus der ArrayList entfernt. Andernfalls wird der
-		// Kurs in seine entsprechende ArrayList eingefügt. Diese Methode wird nur 1x
-		// ausgeführt und überprüft alle Kurse.
+		// Kurs in seine entsprechende ArrayList eingefügt.
 
 		for (int x = 0; x < alleKurse.size(); x++) {
 			Kurs k = alleKurse.get(x);
@@ -389,6 +392,74 @@ public class Stundenplan {
 			}
 		}
 		alleKurse.clear();
+	}
+
+	public static void einKurseinsotrieren() {
+		// letzter hinzugefügter Kurse wird überprüft, ob er fehlerhaft erstellt wurden.
+		// Dann wird überprüft, ob die Blockeinheit bereits belegt ist, falls einer der
+		// beiden Fälle eintritt wird der Kurs aus der ArrayList entfernt. Andernfalls
+		// wird der Kurs in seine entsprechende ArrayList eingefügt. Diese Methode wird
+		// nach jedem neuerstelten Kurs ausgeführt und überprüft lediglich einen (den
+		// letzten) Kurse.
+
+		Kurs neuerKurs = alleKurse.get(0);
+
+		if (neuerKurs.getBlockUhrzeit() == null || neuerKurs.getWochentagZahl() == 0) {
+			alleKurse.remove(0);
+			System.out.println("Der Kurs " + neuerKurs.getKursname()
+					+ " ist fehlerhaft und wird nicht zum Stundenplan hinzugefügt");
+		}
+
+		int gefundeneKurse = 0;
+		for (int i = 0; i < wochentage.size(); i++) {
+			for (int z = 0; z < wochentage.get(i).size(); z++) {
+				Kurs k = wochentage.get(i).get(z);
+
+				if (k.getBlockeinheit() == neuerKurs.getBlockeinheit()
+						&& k.getWochentagZahl() == neuerKurs.getWochentagZahl()) {
+					gefundeneKurse++;
+
+				}
+			}
+		}
+
+		if (gefundeneKurse > 0) {
+			System.out.println("Der Kurs " + neuerKurs.getKursname() + " wurde nicht erstellt, da "
+					+ neuerKurs.getWochentag() + " um " + neuerKurs.getBlockUhrzeit() + " bereits belegt ist.");
+			alleKurse.remove(neuerKurs);
+		} else {
+			switch (alleKurse.get(0).getWochentagZahl()) {
+			case 1:
+				montag.add(neuerKurs);
+
+				break;
+			case 2:
+				dienstag.add(neuerKurs);
+
+				break;
+			case 3:
+				mittwoch.add(neuerKurs);
+
+				break;
+			case 4:
+				donnerstag.add(neuerKurs);
+
+				break;
+			case 5:
+				freitag.add(neuerKurs);
+
+				break;
+			case 6:
+				samstag.add(neuerKurs);
+
+				break;
+			default:
+				// gibts nicht
+				break;
+			}
+
+		}
+
 	}
 
 	/* Kurse */
@@ -516,159 +587,225 @@ public class Stundenplan {
 		Scanner inString = new Scanner(System.in);
 		Scanner inInt = new Scanner(System.in);
 
+		// probier mald
 		System.out.println("Geben Sie den Kursname ein, den Sie erstellen wollen.");
 		String kursName = inString.nextLine();
 
 		int wiederholen = 0;
 		String uhrzeit;
-		while (true) { // Schleife falls die Uhrzeit falsch eingegeben wird, kann man die Uhrzeit
-						// nochmals neu eingeben
-			System.out.println("Geben Sie die Uhrzeit ein, wann der Kurs statt findet.");
-			uhrzeit = inString.nextLine();
-			if (uhrzeit.equals("1") || uhrzeit.equals("2") || uhrzeit.equals("3") || uhrzeit.equals("4")
-					|| uhrzeit.equals("5") || uhrzeit.equals("6") || uhrzeit.equals("8:00 Uhr - 9:30 Uhr")
-					|| uhrzeit.equals("9:45 Uhr - 11:15 Uhr") || uhrzeit.equals("11:30 Uhr - 13:00 Uhr")
-					|| uhrzeit.equals("14:00 Uhr - 15:30 Uhr") || uhrzeit.equals("15:45 Uhr - 17:15 Uhr")
-					|| uhrzeit.equals("17:30 Uhr - 19:00 Uhr")) {
-				break;
-			} else {
-				System.out.println(uhrzeit + " ist keine richtige Angabe");
-
-				System.out.println("┌────────────────────────────────────────┐");
-				System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
-				System.out.println("│1 ➞ Vorhergang beenden                  │");
-				System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
-				System.out.println("└────────────────────────────────────────┘");
-				System.out.print("Ihre Eingabe ➞ ");
-				String uhrzeitWied = inString.nextLine();
-				switch (uhrzeitWied) {
-				case "1":
-					wiederholen = 1;
-					break;
-				default:
-					continue;
-				}
-			}
-			if (wiederholen == 1) {
-				break;
-			}
-		}
-		if (wiederholen == 1) {
-			// break; ssssrrrrryyy
-		}
-
 		String wochentag;
-		while (true) { // Schleife falls der Wochentag falsch eingegeben wird, kann man den Wochentag
-						// nochmals neu eingeben
-			System.out.println("An welchem Wochentag ist der Kurs?");
-			wochentag = inString.nextLine();
-			if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3") || wochentag.equals("4")
-					|| wochentag.equals("5") || wochentag.equals("6") || wochentag.equals("Montag")
-					|| wochentag.equals("Dienstag") || wochentag.equals("Mittwoch") || wochentag.equals("Donnerstag")
-					|| wochentag.equals("Freitag") || wochentag.equals("Samstag") || wochentag.equals("Sonntag")) {
-				break;
-			} else {
-				System.out.println(wochentag + " ist kein Wochentag");
-				System.out.println("┌────────────────────────────────────────┐");
-				System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
-				System.out.println("│1 ➞ Vorhergang beenden                  │");
-				System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
-				System.out.println("└────────────────────────────────────────┘");
-				System.out.print("Ihre Eingabe ➞ ");
-				String wochentagWied = inString.nextLine();
-				switch (wochentagWied) {
-				case "1":
-					wiederholen = 1;
+		while (true) {
+			while (true) { // Schleife falls die Uhrzeit falsch eingegeben wird, kann man die Uhrzeit
+							// nochmals neu eingeben
+				System.out.println("Geben Sie die Uhrzeit ein, wann der Kurs statt findet.");
+				uhrzeit = inString.nextLine();
+				if (uhrzeit.equals("1") || uhrzeit.equals("2") || uhrzeit.equals("3") || uhrzeit.equals("4")
+						|| uhrzeit.equals("5") || uhrzeit.equals("6") || uhrzeit.equals("8:00 Uhr - 9:30 Uhr")
+						|| uhrzeit.equals("9:45 Uhr - 11:15 Uhr") || uhrzeit.equals("11:30 Uhr - 13:00 Uhr")
+						|| uhrzeit.equals("14:00 Uhr - 15:30 Uhr") || uhrzeit.equals("15:45 Uhr - 17:15 Uhr")
+						|| uhrzeit.equals("17:30 Uhr - 19:00 Uhr")) {
 					break;
-				default:
-					continue;
+				} else {
+					System.out.println(uhrzeit + " ist keine richtige Angabe");
+
+					System.out.println("┌────────────────────────────────────────┐");
+					System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+					System.out.println("│1 ➞ Vorhergang beenden                  │");
+					System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
+					System.out.println("└────────────────────────────────────────┘");
+					System.out.print("Ihre Eingabe ➞ ");
+					String uhrzeitWied = inString.nextLine();
+					switch (uhrzeitWied) {
+					case "1":
+						wiederholen = 1;
+						break;
+					default:
+						continue;
+					}
+				}
+				if (wiederholen == 1) {
+					break;
 				}
 			}
 			if (wiederholen == 1) {
-			}
-			{
 				break;
 			}
-		}
-		if (wiederholen == 1) {
-			// break; ssssrrrrryyy
-		}
 
-		System.out.println("Ist der Kurs online?");// While-Schleife, dass man nur true oder false eingeben darf!!!
-		boolean online = inInt.nextBoolean();
+			while (true) { // Schleife falls der Wochentag falsch eingegeben wird, kann man den Wochentag
+							// nochmals neu eingeben
+				System.out.println("An welchem Wochentag ist der Kurs?");
+				wochentag = inString.nextLine();
+				if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3") || wochentag.equals("4")
+						|| wochentag.equals("5") || wochentag.equals("6") || wochentag.equals("Montag")
+						|| wochentag.equals("Dienstag") || wochentag.equals("Mittwoch")
+						|| wochentag.equals("Donnerstag") || wochentag.equals("Freitag") || wochentag.equals("Samstag")
+						|| wochentag.equals("Sonntag")) {
+					break;
+				} else {
+					System.out.println(wochentag + " ist kein Wochentag");
+					System.out.println("┌────────────────────────────────────────┐");
+					System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+					System.out.println("│1 ➞ Vorhergang beenden                  │");
+					System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
+					System.out.println("└────────────────────────────────────────┘");
+					System.out.print("Ihre Eingabe ➞ ");
+					String wochentagWied = inString.nextLine();
+					switch (wochentagWied) {
+					case "1":
+						wiederholen = 1;
+						break;
+					default:
+						continue;
+					}
+				}
+				if (wiederholen == 1) {
+					break;
+				}
+			}
+			if (wiederholen == 1) {
+				break;
+			}
+			boolean online = false;
+			String onlineString;
+			while (true) {
+				System.out.println("Ist der Kurs online?");// While-Schleife, dass man nur true oder false eingeben
+															// darf!!!
+				onlineString = inString.nextLine();
+				if (onlineString.equals("true") || onlineString.equals("false")) {
+					online = Boolean.parseBoolean(onlineString);
+					break;
+				} else {
+					System.out.println(onlineString + " ist keine richtige Angabe");
+					System.out.println("┌────────────────────────────────────────┐");
+					System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+					System.out.println("│1 ➞ Vorhergang beenden                  │");
+					System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
+					System.out.println("└────────────────────────────────────────┘");
+					System.out.print("Ihre Eingabe ➞ ");
+					String onlineWied = inString.nextLine();
+					switch (onlineWied) {
+					case "1":
+						wiederholen = 1;
+						break;
+					default:
+						continue;
+					}
+				}
+				if (wiederholen == 1) {
+					break;
+				}
+			}
+			if (wiederholen == 1) {
+				break;
+			}
 
-		String ort;
+			String ort = null;
 
-		if (online == false) {
-			System.out.println("In welchem Raum findet der Kurs statt?");
-			ort = inString.nextLine();
-		} else {// While schleife eifügen bis dieses Format eingeben wird Gebäude/Raumnummer -
-				// z.B.: 1/111
-			System.out.println("Geben Sie den Link oder Plattform ein wo der Kurs gehalten wird ein.");
-			ort = inString.nextLine();
-		}
+			if (online == false) {
+				System.out.println("In welchem Raum findet der Kurs statt?");
+				ort = inString.nextLine();
+				while (true) {
+					if (ort.contains("/")) {
+						break;
+					} else {
+						System.out.println("Die Angabe war nicht richtig");
+						System.out.println("┌────────────────────────────────────────┐");
+						System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+						System.out.println("│1 ➞ Vorhergang beenden                  │");
+						System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
+						System.out.println("└────────────────────────────────────────┘");
+						System.out.print("Ihre Eingabe ➞ ");
+						String onlineWied = inString.nextLine();
+						switch (onlineWied) {
+						case "1":
+							wiederholen = 1;
+							break;
+						default:
+							continue;
+						}
 
-		for (Professor prof : alleProfessoren) {
-			System.out.println(prof.toStringsimple());
+					}
+				}
+				if (wiederholen == 1) {
+					break;
+				}
 
-		}
+			} else {
 
-		System.out.println("");
-
-		System.out.println("┌────────────────────────────────────────┐");
-		System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
-		System.out.println("│0 ➞ Professor erstellen                 │");
-		System.out.println("│Professor-ID ➞ Professor einteilen      │");
-		System.out.println("└────────────────────────────────────────┘");
-		System.out.print("Ihre Eingabe ➞ ");
-
-		int profID = inInt.nextInt();
-
-		if (profID == 0) {
-			professorErstellen();
+				System.out.println("Geben Sie den Link oder Plattform ein wo der Kurs gehalten wird ein.");
+				ort = inString.nextLine();
+			}
 
 			for (Professor prof : alleProfessoren) {
 				System.out.println(prof.toStringsimple());
 
 			}
-			System.out.println("Welcher Professor hält den Kurs?\n");
-			profID = inInt.nextInt();
-		}
 
-		boolean erstellt = false;
+			System.out.println("");
 
-		for (Professor prof : alleProfessoren) {
-			if (prof.getId() == profID) {
+			System.out.println("┌────────────────────────────────────────┐");
+			System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+			System.out.println("│0 ➞ Professor erstellen               	 │");
+			System.out.println("│Professor-ID ➞ Professor einteilen    	 │");
+			System.out.println("└────────────────────────────────────────┘");
+			System.out.print("Ihre Eingabe ➞ ");
 
-				if (uhrzeit.equals("1") || uhrzeit.equals("2") || uhrzeit.equals("3") || uhrzeit.equals("4")
-						|| uhrzeit.equals("5") || uhrzeit.equals("6")) {
-					int uhrzeitZahl = Integer.parseInt(uhrzeit);
-					if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3") || wochentag.equals("4")
-							|| wochentag.equals("5") || wochentag.equals("6")) {
-						int wochentagZahl = Integer.parseInt(wochentag);
-						alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentagZahl, online, ort, profID));
+			int profID = inInt.nextInt();
 
-					} else {
-						alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentag, online, ort, profID));
-					}
-				} else {
-					if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3") || wochentag.equals("4")
-							|| wochentag.equals("5") || wochentag.equals("6")) {
-						int wochentagZahl = Integer.parseInt(wochentag);
-						alleKurse.add(new Kurs(kursName, uhrzeit, wochentagZahl, online, ort, profID));
-					} else {
-						alleKurse.add(new Kurs(kursName, uhrzeit, wochentag, online, ort, profID));
-					}
+			if (profID == 0) {
+				professorErstellen();
+
+				for (Professor prof : alleProfessoren) {
+					System.out.println(prof.toStringsimple());
+
 				}
-				erstellt = true;
+				System.out.println("Welcher Professor hält den Kurs?\n");
+				profID = inInt.nextInt();
 			}
-			kurseEinsortieren();
 
-		}
+			boolean erstellt = false;
 
-		if (erstellt == false) {
+			for (Professor prof : alleProfessoren) {
+				if (prof.getId() == profID) {
 
-			System.out.println("Der Kurs wurde nicht erstellt, da '" + profID + "' keine gültige Professor-ID ist.");
+					if (uhrzeit.equals("1") || uhrzeit.equals("2") || uhrzeit.equals("3") || uhrzeit.equals("4")
+							|| uhrzeit.equals("5") || uhrzeit.equals("6")) {
+						int uhrzeitZahl = Integer.parseInt(uhrzeit);
+						if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3")
+								|| wochentag.equals("4") || wochentag.equals("5") || wochentag.equals("6")) {
+							int wochentagZahl = Integer.parseInt(wochentag);
+							alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentagZahl, online, ort, profID));
+
+						} else {
+							alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentag, online, ort, profID));
+						}
+					} else {
+						if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3")
+								|| wochentag.equals("4") || wochentag.equals("5") || wochentag.equals("6")) {
+							int wochentagZahl = Integer.parseInt(wochentag);
+							alleKurse.add(new Kurs(kursName, uhrzeit, wochentagZahl, online, ort, profID));
+						} else {
+							alleKurse.add(new Kurs(kursName, uhrzeit, wochentag, online, ort, profID));
+						}
+					}
+					erstellt = true;
+				}
+
+			}
+
+			if (erstellt == false) {
+
+				System.out
+						.println("Der Kurs wurde nicht erstellt, da '" + profID + "' keine gültige Professor-ID ist.");
+
+			}
+
+			if (erstellt == true) {
+				einKurseinsotrieren();
+				sortBlockeinheit();
+			}
+			endeVonSwitchCase();
+			break;
 
 		}
 
@@ -838,6 +975,7 @@ public class Stundenplan {
 			System.out.println(
 					"Der Professor mit dem Namen '" + name + "' wurde nicht erstellt, da dieser bereits existiert");
 		}
+
 	}
 
 	public static void professorloeschen() {
