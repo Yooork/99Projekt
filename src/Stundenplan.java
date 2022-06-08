@@ -610,13 +610,14 @@ public class Stundenplan {
 
 					System.out.println("┌────────────────────────────────────────┐");
 					System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
-					System.out.println("│1 ➞ Vorhergang beenden                  │");
 					System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
+					System.out.println("│q ➞ Vorhergang beenden                  │");
+
 					System.out.println("└────────────────────────────────────────┘");
 					System.out.print("Ihre Eingabe ➞ ");
 					String uhrzeitWied = inString.nextLine();
 					switch (uhrzeitWied) {
-					case "1":
+					case "q":
 						wiederholen = 1;
 						break;
 					default:
@@ -645,13 +646,14 @@ public class Stundenplan {
 					System.out.println(wochentag + " ist kein Wochentag");
 					System.out.println("┌────────────────────────────────────────┐");
 					System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
-					System.out.println("│1 ➞ Vorhergang beenden                  │");
+
 					System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
+					System.out.println("│q ➞ Vorhergang beenden                  │");
 					System.out.println("└────────────────────────────────────────┘");
 					System.out.print("Ihre Eingabe ➞ ");
 					String wochentagWied = inString.nextLine();
 					switch (wochentagWied) {
-					case "1":
+					case "q":
 						wiederholen = 1;
 						break;
 					default:
@@ -668,8 +670,7 @@ public class Stundenplan {
 			boolean online = false;
 			String onlineString;
 			while (true) {
-				System.out.println("Ist der Kurs online?");// While-Schleife, dass man nur true oder false eingeben
-															// darf!!!
+				System.out.println("Ist der Kurs online?");
 				onlineString = inString.nextLine();
 				if (onlineString.equals("true") || onlineString.equals("false")) {
 					online = Boolean.parseBoolean(onlineString);
@@ -678,13 +679,14 @@ public class Stundenplan {
 					System.out.println(onlineString + " ist keine richtige Angabe");
 					System.out.println("┌────────────────────────────────────────┐");
 					System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
-					System.out.println("│1 ➞ Vorhergang beenden                  │");
 					System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
+					System.out.println("│q ➞ Vorhergang beenden                  │");
+
 					System.out.println("└────────────────────────────────────────┘");
 					System.out.print("Ihre Eingabe ➞ ");
 					String onlineWied = inString.nextLine();
 					switch (onlineWied) {
-					case "1":
+					case "q":
 						wiederholen = 1;
 						break;
 					default:
@@ -701,23 +703,25 @@ public class Stundenplan {
 
 			String ort = null;
 
-			if (online == false) {
-				System.out.println("In welchem Raum findet der Kurs statt?");
-				ort = inString.nextLine();
-				while (true) {
+			while (true) {
+				if (online == false) {
+					System.out.println("In welchem Raum findet der Kurs statt?");
+					ort = inString.nextLine();
 					if (ort.contains("/")) {
 						break;
 					} else {
-						System.out.println("Die Angabe war nicht richtig");
+						System.out.println(
+								"Die Angabe war nicht richtig, das Gebäude muss mit einem '/' von der Raumnummer getrennt sein.");
 						System.out.println("┌────────────────────────────────────────┐");
 						System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
-						System.out.println("│1 ➞ Vorhergang beenden                  │");
 						System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
+						System.out.println("│q ➞ Vorhergang beenden                  │");
+
 						System.out.println("└────────────────────────────────────────┘");
 						System.out.print("Ihre Eingabe ➞ ");
 						String onlineWied = inString.nextLine();
 						switch (onlineWied) {
-						case "1":
+						case "q":
 							wiederholen = 1;
 							break;
 						default:
@@ -730,10 +734,12 @@ public class Stundenplan {
 					break;
 				}
 
-			} else {
+				else {
 
-				System.out.println("Geben Sie den Link oder Plattform ein wo der Kurs gehalten wird ein.");
-				ort = inString.nextLine();
+					System.out.println("Geben Sie den Link oder Plattform ein wo der Kurs gehalten wird ein.");
+					ort = inString.nextLine();
+				}
+
 			}
 
 			for (Professor prof : alleProfessoren) {
