@@ -665,7 +665,7 @@ public class Stundenplan {
 					online = false;
 					break;
 				} else {
-					System.out.println(onlineString + " ist keine richtige Angabe");
+					System.err.println(onlineString + " ist keine richtige Angabe");
 					System.out.println("┌────────────────────────────────────────┐");
 					System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
 					System.out.println("│andere Taste ➞ Eingabe wiederholen      │");
