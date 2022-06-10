@@ -38,15 +38,16 @@ public class Stundenplan {
 
 		alleProfessoren.add(new Professor("Pado", "Ulrike", "Weiblich", 4971189262811l));
 
-		alleKurse.add(new Kurs("4", 1, 4, true, "Zoom", 1));
-		alleKurse.add(new Kurs("4", 1, 2, true, "Moodle", 1));
-		alleKurse.add(new Kurs("4", 1, 3, false, "1/111", 1));
-		alleKurse.add(new Kurs("5", 1, 6, false, "1/405", 1));
-		alleKurse.add(new Kurs("6", 1, 5, false, "4/134", 1));
-		alleKurse.add(new Kurs("1.1", 1, 1, false, "1/654", 1));
+		alleKurse.add(new Kurs("4", 1, 4, false, "Rotes Haus", 1));
+//		alleKurse.add(new Kurs("4", 1, 2, true, "Moodle", 1));
+//		alleKurse.add(new Kurs("4", 1, 3, false, "1/111", 1));
+//		alleKurse.add(new Kurs("5", 1, 6, false, "1/405", 1));
+//		alleKurse.add(new Kurs("6", 1, 5, false, "4/134", 1));
+//		alleKurse.add(new Kurs("1.1", 1, 1, false, "1/654", 1));
 		alleKurse.add(new Kurs("3.1", 1, 2, false, "2/201", 1));
-		alleKurse.add(new Kurs("3.2", 1, 2, false, "8/423", 1));
-		alleKurse.add(new Kurs("1.1", 5, 2, false, "3/654", 1));
+		alleKurse.add(new Kurs("3.2", -1, -2, false, "8/423", 1));
+//		alleKurse.add(new Kurs("1.1", 5, 2, false, "3/654", 1));
+		
 
 		professorenVonDateieinlesen();
 
@@ -59,24 +60,7 @@ public class Stundenplan {
 		while (true) {
 			Scanner eingabesc = new Scanner(System.in);
 
-			// Website von den folgenden Sonderzeichen: https://de.piliapp.com/symbol/line/
-			System.out.println("┌────────────────────────────────────────┐");
-			System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
-			System.out.println("│▶ Kurs-Abteilung ◀                      │");
-			System.out.println("│ 1 ➞ alle ausgeben                      │");
-			System.out.println("│ 2 ➞ suchen                             │");
-			System.out.println("│ 3 ➞ erstellen                          │");
-			System.out.println("│ 4 ➞ löschen                            │");
-			System.out.println("│▶ Professor-Abteilung ◀                 │");
-			System.out.println("│ 5 ➞ alle ausgeben                      │");
-			System.out.println("│ 6 ➞ suchen                             │");
-			System.out.println("│ 7 ➞ erstellen                          │");
-			System.out.println("│ 8 ➞ löschen                            │");
-			System.out.println("│▶ Sonstiges-Abteilung ◀                 │");
-			System.out.println("│ 9 ➞ Stundenplan als Datei ausgeben     │");
-			System.out.println("│ q ➞ Programm beenden                   │");
-			System.out.println("└────────────────────────────────────────┘");
-			System.out.print("Ihre Eingabe ➞ ");
+			printMenu();
 
 			String eingabeSwitch = eingabesc.nextLine();
 
@@ -118,6 +102,7 @@ public class Stundenplan {
 				professorSuchen();
 				endeVonSwitchCase();
 				break;
+				
 			case "7":// Professor erstellen
 				professorErstellen();
 				endeVonSwitchCase();
@@ -671,9 +656,13 @@ public class Stundenplan {
 			String onlineString;
 			while (true) {
 				System.out.println("Ist der Kurs online?");
-				onlineString = inString.nextLine();
-				if (onlineString.equals("true") || onlineString.equals("false")) {
-					online = Boolean.parseBoolean(onlineString);
+				System.out.println("Falls ja, geben Sie y ein, falls nein, geben Sie n ein.");
+				onlineString = inString.nextLine().toLowerCase();
+				if (onlineString.equals("y")||onlineString.equals("ja")||onlineString.equals("yes")) {
+					online = true;
+					break;
+				} else if (onlineString.equals("n")||onlineString.equals("nein")||onlineString.equals("no")) {
+					online = false;
 					break;
 				} else {
 					System.out.println(onlineString + " ist keine richtige Angabe");
@@ -707,7 +696,7 @@ public class Stundenplan {
 				if (online == false) {
 					System.out.println("In welchem Raum findet der Kurs statt?");
 					ort = inString.nextLine();
-					if (ort.contains("/")) {
+					/*if (ort.contains("/")) {
 						break;
 					} else {
 						System.out.println(
@@ -728,17 +717,21 @@ public class Stundenplan {
 							continue;
 						}
 
-					}
-				}
-				if (wiederholen == 1) {
+					}*/
 					break;
 				}
-
+				
 				else {
 
 					System.out.println("Geben Sie den Link oder Plattform ein wo der Kurs gehalten wird ein.");
 					ort = inString.nextLine();
 				}
+				
+				if (wiederholen == 1) {
+					break;
+				}
+
+				
 
 			}
 
@@ -780,18 +773,18 @@ public class Stundenplan {
 						if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3")
 								|| wochentag.equals("4") || wochentag.equals("5") || wochentag.equals("6")) {
 							int wochentagZahl = Integer.parseInt(wochentag);
-							alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentagZahl, online, ort, profID));
+							alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentagZahl, online, ort, prof.getId()));
 
 						} else {
-							alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentag, online, ort, profID));
+							alleKurse.add(new Kurs(kursName, uhrzeitZahl, wochentag, online, ort, prof.getId()));
 						}
 					} else {
 						if (wochentag.equals("1") || wochentag.equals("2") || wochentag.equals("3")
 								|| wochentag.equals("4") || wochentag.equals("5") || wochentag.equals("6")) {
 							int wochentagZahl = Integer.parseInt(wochentag);
-							alleKurse.add(new Kurs(kursName, uhrzeit, wochentagZahl, online, ort, profID));
+							alleKurse.add(new Kurs(kursName, uhrzeit, wochentagZahl, online, ort, prof.getId()));
 						} else {
-							alleKurse.add(new Kurs(kursName, uhrzeit, wochentag, online, ort, profID));
+							alleKurse.add(new Kurs(kursName, uhrzeit, wochentag, online, ort, prof.getId()));
 						}
 					}
 					erstellt = true;
@@ -807,7 +800,7 @@ public class Stundenplan {
 			}
 
 			if (erstellt == true) {
-				System.out.println("Der Kurs mit dem Namen '" + alleKurse.get(0).getKursname() + "' wurde erstellt.");
+				System.out.println("***\nDer Kurs mit dem Namen '" + alleKurse.get(0).getKursname() + "' wurde erstellt.\n***");
 				einKurseinsotrieren();
 				sortBlockeinheit();
 			}
@@ -977,10 +970,10 @@ public class Stundenplan {
 
 		if (existiert == false) {
 			alleProfessoren.add(new Professor(name, vorname, geschlecht, tel));
-			System.out.println("Der Professor mit dem Namen '" + name + "' wurde erfolgreich erstellt.");
+			System.out.println("***\nDer Professor mit dem Namen '" + name + "' wurde erfolgreich erstellt.\n***");
 		} else {
 			System.out.println(
-					"Der Professor mit dem Namen '" + name + "' wurde nicht erstellt, da dieser bereits existiert");
+					"***\nDer Professor mit dem Namen '" + name + "' wurde nicht erstellt, da dieser bereits existiert.\n***");
 		}
 
 	}
@@ -1221,4 +1214,30 @@ public class Stundenplan {
 		}
 
 	}
+
+
+	private static void printMenu(){
+		// Website von den folgenden Sonderzeichen: https://de.piliapp.com/symbol/line/
+					System.out.println("┌────────────────────────────────────────┐");
+					System.out.println("│Wählen Sie unter folgenen Möglichkeiten:│");
+					System.out.println("│▶ Kurs-Abteilung ◀                      │");
+					System.out.println("│ 1 ➞ alle ausgeben                      │");
+					System.out.println("│ 2 ➞ suchen                             │");
+					System.out.println("│ 3 ➞ erstellen                          │");
+					System.out.println("│ 4 ➞ löschen                            │");
+					System.out.println("│▶ Professor-Abteilung ◀                 │");
+					System.out.println("│ 5 ➞ alle ausgeben                      │");
+					System.out.println("│ 6 ➞ suchen                             │");
+					System.out.println("│ 7 ➞ erstellen                          │");
+					System.out.println("│ 8 ➞ löschen                            │");
+					System.out.println("│▶ Sonstiges-Abteilung ◀                 │");
+					System.out.println("│ 9 ➞ Stundenplan als Datei ausgeben     │");
+					System.out.println("│ q ➞ Programm beenden                   │");
+					System.out.println("└────────────────────────────────────────┘");
+					System.out.print("Ihre Eingabe ➞ ");
+	}
+
 }
+
+
+

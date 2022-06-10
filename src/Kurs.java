@@ -1,6 +1,6 @@
 
 public class Kurs {
-	private static int zaehler = 1;
+public static int zaehler = 1;
 	private String kursname;
 	private Integer blockeinheit;
 	private String blockUhrzeit;
@@ -24,12 +24,12 @@ public class Kurs {
 		try {
 			blockUhrzeit = blockeinheitInBlockUhrzeit(blockeinheit);
 		} catch (ExceptionUhrzeit e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		try {
 			wochentagZahl = wochentagInwochentagZahl(wochentag);
 		} catch (ExecptionTag e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 
 	}
@@ -48,13 +48,15 @@ public class Kurs {
 		try {
 			blockUhrzeit = blockeinheitInBlockUhrzeit(blockeinheit);
 		} catch (ExceptionUhrzeit e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		try {
 			wochentag = wochentagZahlInWochentag(wochentagZahl);
 		} catch (ExecptionTag e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
+		
+		System.out.println("pimmel");
 
 	}
 
@@ -72,12 +74,12 @@ public class Kurs {
 		try {
 			wochentagZahl = wochentagInwochentagZahl(wochentag);
 		} catch (ExecptionTag e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		try {
 			blockeinheit = blockUhrzeitInBlockeinheit(blockUhrzeit);
 		} catch (ExceptionUhrzeit e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 
 	}
@@ -95,12 +97,12 @@ public class Kurs {
 		try {
 			wochentag = wochentagZahlInWochentag(wochentagZahl);
 		} catch (ExecptionTag e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		try {
 			blockeinheit = blockUhrzeitInBlockeinheit(blockUhrzeit);
 		} catch (ExceptionUhrzeit e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 
 	}
@@ -126,15 +128,15 @@ public class Kurs {
 	}
 
 	public String toStringforKonsole() {
-		if (online == true) {
+		if (online) {
 			return "Kurs: " + kursname + "\nWann: " + wochentag + " um " + blockUhrzeit + "\nKurs-ID: " + kursId
 					+ "\nProfessor-ID: " + pID + "\nOnline: " + online + "\nPlattform: " + ort;
 		} else {
 			if (ort.contains("/")) {
 				String[] gebaudeUndRaum = ort.split("/");
 				return "Kurs: " + kursname + "\nWann: " + wochentag + " um " + blockUhrzeit + "\nKurs-ID: " + kursId
-						+ "\nProfessor-ID: " + pID + "\nOnline: " + online + "\nRaum: " + gebaudeUndRaum[0]
-						+ "\nGebäude: " + gebaudeUndRaum[1];
+						+ "\nProfessor-ID: " + pID + "\nOnline: " + online + "\nRaum: " + gebaudeUndRaum[1]
+						+ "\nGebäude: " + gebaudeUndRaum[0];
 			} else {
 				return "Kurs: " + kursname + "\nWann: " + wochentag + " um " + blockUhrzeit + "\nKurs-ID: " + kursId
 						+ "\nProfessor-ID: " + pID + "\nOnline: " + online + "\nOrt: " + ort;
